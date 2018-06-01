@@ -3,10 +3,10 @@
  * 权限角色管理
  */
 
-namespace app\app\backend\components;
+namespace app\common\components;
 
+use think\facade\Session;
 
-use Yii;
 class AppAdminAcl
 {
 //权限配制数据
@@ -90,6 +90,13 @@ class AppAdminAcl
         if ($super == 1) return $item;
         foreach ($item as $k=>$v) {
             foreach ($v['ctl'] as $kk=>$vv) {
+                if((isset($vv['module']) && request()->module() == $vv['module']) || request()->module() == $v['module'] && in_array(request()->controller(), $vv['list_ctl'])) {
+                    $vv['liclass'] = "active open";
+                }
+                if(request()->module() == $v['module'] && in_array(request()->controller(), $vv['list_ctl'])) {
+                    $vv['spanclass'] = "open";
+                }
+
                 foreach ($vv['act'] as $kkk=>$vvv) {
                     foreach ($vvv['list_side'] as $side_item) {
                         $acl = $v['module'].'/'.$kkk.'/'.$side_item;
@@ -114,8 +121,8 @@ class AppAdminAcl
      */
     public static function filterButton($act, $button = true)
     {
-        if (Yii::$app->session['super'] == 1) return $button;
-        if (strpos(Yii::$app->session['acl'], $act) !== false) return $button;
+        if (Session::get('super') == 1) return $button;
+        if (strpos(Session::get('acl'), $act) !== false) return $button;
         return '';
     }
 }

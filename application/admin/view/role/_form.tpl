@@ -10,9 +10,9 @@
             </div>
             <div class="portlet-body" id="table">
                 <!-- BEGIN FORM-->
-                <form action="?r=admin/role/<?php echo $action;?>" class="form-horizontal" id="validation-form" method="post">
+                <form action="/admin/role/{$action}" class="form-horizontal" id="validation-form" method="post">
                     <div class="form-body">
-                        <?php echo $this->render('@app/app/backend/views/common/form_tip');?>
+                        {include file="_common/form_tip"}
                         <div class="form-group">
                             <label class="control-label col-md-3">
                                 <input type="checkbox" class="group-checkable" data-set="#table .checkboxes" />全选
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="_csrf" value="<?php echo Yii::$app->request->getCsrfToken()?>" />
+                    <input type="hidden" name="_csrf" value="{$Request.token}" />
                 </form>
                 <!-- END FORM-->
             </div>

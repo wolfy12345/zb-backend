@@ -53,7 +53,7 @@ class User extends Controller
                 ],[
                     'user_id' => $result['user_id']
                 ]);
-                return redirect("/admin/default/index");
+                return redirect("/admin/index/index");
             }
         }
         return $this->fetch('login', $this->data);
