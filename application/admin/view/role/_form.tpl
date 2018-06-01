@@ -28,28 +28,28 @@
 
                         <div class="form-group">
                             <div class="col-md-12">
-                                <?php foreach (\app\app\backend\components\AppAdminAcl::$aclList as $v):?>
+                                {foreach $aclList as $v}
                                     <div class="form-group">
                                         <div class="caption">
-                                            <h3 class="caption-subject font-green"><?php echo $v['name'];?></h3>
+                                            <h3 class="caption-subject font-green">{$v['name']}</h3>
                                         </div>
-                                        <?php foreach ($v['ctl'] as $vv):?>
+                                        {foreach $v['ctl'] as $vv}
                                             <div class="caption">
-                                                <h5 class="caption-subject font-green sbold"><?php echo $vv['name'];?></h5>
+                                                <h5 class="caption-subject font-green sbold">{$vv['name']}</h5>
                                             </div>
-                                            <?php foreach ($vv['act'] as $kkk=>$vvv):?>
+                                            {foreach $vv['act'] as $kkk=>$vvv}
                                                 <div class="caption">
-                                                    <?php foreach ($vvv['list_act'] as $kkkk=>$vvvv):?>
+                                                    {foreach $vvv['list_act'] as $kkkk=>$vvvv}
                                                         <label>
-                                                            <input type="checkbox" class="checkboxes" value="<?php echo $v['module'].'/'.$kkk.'/'.$kkkk?>" name="Acl[]"
-                                                                <?php if (isset($role_row['acl'])&&strpos($role_row['acl'], $v['module'].'/'.$kkk.'/'.$kkkk)!==false):?>checked<?php endif;?>/><?php echo $vvvv;?>
+                                                            <input type="checkbox" class="checkboxes" value="{$v['module']}/{$kkk}/{$kkkk}" name="Acl[]"
+                                                                {if isset($role_row['acl']) AND strpos($role_row['acl'], $v['module']/$kkk/$kkkk) !== false}checked{/if} />{$vvvv}
                                                         </label>
-                                                    <?php endforeach;?>
+                                                    {/foreach}
                                                 </div>
-                                            <?php endforeach;?>
-                                        <?php endforeach;?>
+                                            {/foreach}
+                                        {/foreach}
                                     </div>
-                                <?php endforeach;?>
+                                {/foreach}
                             </div>
                         </div>
                     </div>
