@@ -7,7 +7,7 @@ validate(
 //弹出冻结操作
 $('.cancel').click(function(){
     var obj = $(this);
-    bootbox.confirm("是否确定删除", function(result) {
+    bootbox.confirm("是否确定冻结", function(result) {
         if (result == true) {
             var data_href = obj.attr('data-href');
             var csrf = $('.request-csrf').val();

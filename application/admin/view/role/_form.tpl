@@ -22,7 +22,7 @@
                             </label>
                             <div class="col-md-4">
                                 <input type="text" name="Group[group_name]" class="form-control"
-                                    value="<?php echo isset($role_row['group_name'])?$role_row['group_name']:'';?>"/>
+                                    value="{$role_row['group_name'] ?? ''}"/>
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
                                                     {foreach $vvv['list_act'] as $kkkk=>$vvvv}
                                                         <label>
                                                             <input type="checkbox" class="checkboxes" value="{$v['module']}/{$kkk}/{$kkkk}" name="Acl[]"
-                                                                {if isset($role_row['acl']) AND strpos($role_row['acl'], $v['module']/$kkk/$kkkk) !== false}checked{/if} />{$vvvv}
+                                                                {php}$p = $v['module'].'/'.$kkk.'/'.$kkkk; if(isset($role_row['acl']) && strpos($role_row['acl'], $p) !== false) echo 'checked';{/php} />{$vvvv}
                                                         </label>
                                                     {/foreach}
                                                 </div>

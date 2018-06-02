@@ -33,19 +33,6 @@ class Role extends Controller
      */
     public function index()
     {
-//        $pageIndex = $req->get('page', 1);
-
-//        $this->data['count'] = AdminGroup::where('status', 'active')->count();
-//        $this->data['dataProvider'] = AdminGroup::where('status', 'active')->order('role_id ' . SORT_ASC)->page($pageIndex, $this->pageSize)->select();
-//
-//        $this->data['pages'] = new Pagination(
-//            [
-//                'totalCount' => $this->data['count'],
-//                'defaultPageSize'=>$pageIndex,
-//                'pageSizeLimit'=>[$this->pageSize,$this->pageSize]
-//            ]
-//        );
-
         $this->data['title'] = '角色管理';
         $this->data['breadcrumbs'] = [['label'=>'管理员和权限','url'=>'/admin/role/index'],['label'=>'角色管理']];
 
@@ -67,14 +54,14 @@ class Role extends Controller
 
         if ($req->post())
         {
-            $group_attributes = $req->post('Group');
-            $group_attributes['last_modify'] = time();
-            $acl_attributes = $req->post('Acl');
+            $attributes = $req->param();
+            $group = $attributes['Group'];
+            $group['last_modify'] = time();
+            $acl = $attributes['Acl'];
 
-            if ($acl_attributes) $group_attributes['acl'] = implode(',', $acl_attributes);
+            if ($acl) $group['acl'] = implode(',', $acl);
             $adminGroup = new AdminGroup();
-//            $adminGroup->attributes = $group_attributes;
-            $submit = $adminGroup->save($group_attributes)?200:500;
+            $submit = $adminGroup->save($group)?200:500;
 //            $this->refresh('&ref_sub='.$submit);
             $this->redirect('create', ['ref_sub' => $submit]);
         }
@@ -87,21 +74,25 @@ class Role extends Controller
      */
     public function update(Request $req)
     {
-        $role_id = Yii::$app->request->get('role_id');
-        if (Yii::$app->request->post())
-        {
-            $group_attributes = Yii::$app->request->post('Group');
-            $group_attributes['last_modify'] = time();
-            $acl_attributes = Yii::$app->request->post('Acl');
 
-            if ($acl_attributes) $group_attributes['acl'] = implode(',', $acl_attributes);
-            $adminGroup = AdminGroup::findOne($role_id);
-            $adminGroup->attributes = $group_attributes;
-            $submit = $adminGroup->update()?200:500;
-            $this->refresh('&ref_sub='.$submit);
+        $this->data['title'] = '角色管理';
+        $this->data['breadcrumbs'] = [['label'=>'管理员和权限','url'=>'?r=admin/role/index'],['label'=>'角色管理','url'=>'?r=admin/role/index'],['label'=>'编辑']];
+
+        $role_id = $req->param('role_id');
+        if ($req->post())
+        {
+            $attributes = $req->param();
+            $group = $attributes['Group'];
+            $group['last_modify'] = time();
+            $acl = $attributes['Acl'];
+
+            if ($acl) $group['acl'] = implode(',', $acl);
+            $adminGroup = new AdminGroup();
+            $submit = $adminGroup->save($group, ['role_id' => $role_id]) ? 200 : 500;
+            $this->redirect('update', ['role_id' => $role_id, 'ref_sub' => $submit]);
         }
-        $this->data['action'] = 'update&role_id='.$role_id;
-        $this->data['role_row'] = AdminGroup::find()->where(['role_id'=>$role_id])->one();
+        $this->data['action'] = 'update/role_id/'.$role_id;
+        $this->data['role_row'] = AdminGroup::where(['role_id'=>$role_id])->find();
         return $this->fetch('update', $this->data);
     }
 
@@ -110,11 +101,12 @@ class Role extends Controller
      */
     public function cancel(Request $req)
     {
-        $this->enableCsrfValidation = false;
-        $role_id = Yii::$app->request->get('role_id');
-        if (!$role_id) return Json::encode(['code'=>500, 'msg'=>'没有获取请求的ID']);
-        $submit = AdminGroup::updateAll(['status'=>'dead'], 'role_id = :role_id', [':role_id'=>$role_id])?200:500;
-        if ($submit == 500) return Json::encode(['code'=>500, 'msg'=>'冻结失败']);
-        return Json::encode(['code'=>200]);
+//        $this->enableCsrfValidation = false;
+        $role_id = $req->param('role_id');
+        if (!$role_id) return json(['code'=>500, 'msg'=>'没有获取请求的ID']);
+        $adminGroup = new AdminGroup();
+        $submit = $adminGroup->save(['status'=>'dead'], ['role_id'=>$role_id])?200:500;
+        if ($submit == 500) return json(['code'=>500, 'msg'=>'冻结失败']);
+        return json(['code'=>200]);
     }
 }

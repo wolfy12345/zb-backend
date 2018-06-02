@@ -77,5 +77,6 @@
         <script src="/static/themes/global/plugins/flot/jquery.flot.resize.min.js"></script>
         <script src="/static/themes/global/plugins/flot/jquery.flot.categories.min.js"></script>
         <script src="/static/themes/backend/admin/default.js"></script>
+        <script src="/static/themes/backend/admin/role.js"></script>
     </body>
 </html>

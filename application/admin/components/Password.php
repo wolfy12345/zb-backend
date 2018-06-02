@@ -6,7 +6,7 @@
  * Time: 17:03
  */
 
-namespace app\backend\modules\admin\components;
+namespace app\admin\components;
 
 
 class Password

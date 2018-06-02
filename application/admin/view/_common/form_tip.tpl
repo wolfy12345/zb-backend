@@ -5,7 +5,7 @@
     <button class="close" data-close="alert"></button> 表单验证成功！
 </div>
 
-{if $Request.get.ref_sub == 200}
+{if $Request.param.ref_sub == 200}
     <div class="alert alert-block alert-success fade in form-success">
         <button type="button" class="close" data-dismiss="alert"></button>
         <h4 class="alert-heading">成功!</h4>
@@ -18,7 +18,7 @@
     </div>
 {/if}
 
-{if $Request.get.ref_sub == 500}
+{if $Request.param.ref_sub == 500}
     <div class="alert alert-block alert-danger fade in form-error">
         <button type="button" class="close" data-dismiss="alert"></button>
         <h4 class="alert-heading">失败!</h4>

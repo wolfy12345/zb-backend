@@ -34,9 +34,9 @@
                                 <tr class="odd gradeX">
                                     <td>
                                         {php}echo AppAdminAcl::filterButton('admin/role/update',
-                                            '<a href="/admin/role/update&role_id='.$v['role_id'].'" type="button" class="btn btn-sm btn-info">编辑</a>');{/php}
+                                            '<a href="/admin/role/update/role_id/'.$v['role_id'].'" type="button" class="btn btn-sm btn-info">编辑</a>');{/php}
                                         {php}echo AppAdminAcl::filterButton('admin/role/cancel',
-                                            '<a data-href="/admin/role/cancel&role_id='.$v['role_id'].'" type="button" class="btn btn-sm btn-danger cancel">冻结</a>');{/php}
+                                            '<a data-href="/admin/role/cancel/role_id/'.$v['role_id'].'" type="button" class="btn btn-sm btn-danger cancel">冻结</a>');{/php}
                                     </td>
                                     <td>
                                         {$v['group_name']}

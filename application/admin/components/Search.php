@@ -7,8 +7,7 @@
  * @version    2.0
  */
 
-namespace app\backend\modules\admin\components;
-
+namespace app\admin\components;
 
 class Search
 {
@@ -21,11 +20,11 @@ class Search
      */
     public static function admin($params, $data)
     {
-        if (isset($params['type']) && $params['type'] == 1) return $data->andWhere(['like',$params['Single']['name'],$params['Single']['search_val']]);
+        if (isset($params['type']) && $params['type'] == 1) return $data->where($params['Single']['name'], 'like', "%" . $params['Single']['search_val'] . "%");
         if (isset($params['type']) && $params['type'] == 2) {
-            foreach ($params['Multi'] as $k=>$v) {
-                if ($k == 'login_account') $data = $data->andWhere(['like',$k,$v]);
-                elseif ($k == 'truename') $data = $data->andWhere(['like',$k,$v]);
+            foreach ($params['Multi'] as $k => $v) {
+                if ($k == 'login_account') $data = $data->where($k, 'like', "%" . $v . "%");
+                elseif ($k == 'truename') $data = $data->where($k, 'like', "%" . $v . "%");
             }
 
             return $data;
