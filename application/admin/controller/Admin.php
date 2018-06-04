@@ -15,6 +15,7 @@ use app\admin\model\AdminUser;
 use app\common\components\AppAdminAcl;
 use think\Controller;
 use app\admin\components\Search;
+use think\Db;
 use think\facade\Session;
 use think\Request;
 
@@ -38,7 +39,7 @@ class Admin extends Controller
     public function index(Request $req)
     {
         $this->data['title'] = '管理员管理';
-        $this->data['breadcrumbs'] = [['label'=>'管理员和权限','url'=>'?r=admin/admin/index'],['label'=>'管理员管理']];
+        $this->data['breadcrumbs'] = [['label' => '管理员和权限', 'url' => '/admin/admin/index'], ['label' => '管理员管理']];
 
         $this->data['search_attributes'] = $search = $req->param();
 
@@ -57,84 +58,97 @@ class Admin extends Controller
     /**
      * 创建
      */
-    public function actionCreate()
+    public function create(Request $req)
     {
-        if (Yii::$app->request->post())
-        {
-            $user_attributes = Yii::$app->request->post('User');
-            $user_attributes['password'] = md5(md5($user_attributes['password']));
-            $user_attributes['last_modify'] = time();
+        $this->data['title'] = '管理员管理';
+        $this->data['breadcrumbs'] = [['label'=>'管理员和权限','url'=>'/admin/admin/index'],['label'=>'管理员管理','url'=>'/admin/admin/index'],['label'=>'添加']];
 
-            $role_attributes = Yii::$app->request->post('Role');
+
+        if ($req->post()) {
+            $attributes = $req->param();
+            $user = $attributes['User'];
+            $role = $attributes['Role'];
+            $checkData = $user + $role;
+            $user['password'] = md5(md5($user['password']));
+            $user['last_modify'] = time();
 
             $adminUser = new AdminUser();
             $adminRole = new AdminRole();
-            $adminUser->attributes = $user_attributes;
-            $submit = $adminUser->save()?200:500;
-            $role_attributes['user_id'] = Yii::$app->db->getLastInsertID();
 
-            if ($submit == 200) {
-                $adminRole->attributes = $role_attributes;
-                $adminRole->save();
+            $result = $this->validate(
+                $checkData, 'app\admin\validate\User');
+
+            if (true !== $result) {
+                $this->redirect('create', ['ref_sub' => 500, 'msg' => $result]);
+                exit;
             }
-            $this->refresh('&ref_sub='.$submit);
+
+            $submit = $adminUser->save($user) ? 200 : 500;
+            if ($submit == 200) {
+                $role['user_id'] = $adminUser->user_id;
+                $adminRole->save($role);
+            }
+            $this->redirect('create', ['ref_sub' => $submit]);
         }
+
         $this->data['action'] = 'create';
-        $this->data['role_list'] = AdminGroup::findAll(['status'=>'active']);
-        return $this->render('create', $this->data);
+        $this->data['role_list'] = AdminGroup::all(['status' => 'active']);
+        return $this->fetch('create', $this->data);
     }
 
     /**
      * 编辑
      */
-    public function actionUpdate()
+    public function update(Request $req)
     {
-        $user_id = Yii::$app->request->get('user_id');
-        if (Yii::$app->request->post())
-        {
-            $user_attributes = Yii::$app->request->post('User');
+        $this->data['title'] = '管理员管理';
+        $this->data['breadcrumbs'] = [['label'=>'管理员和权限','url'=>'/admin/admin/index'],['label'=>'管理员管理','url'=>'/admin/admin/index'],['label'=>'编辑']];
+        
+        $user_id = $req->param('user_id');
+        if ($req->post()) {
+            $attributes = $req->param();
+            $user = $attributes['User'];
+            $user['last_modify'] = time();
+            $role = $attributes['Role'];
 
-            $user_attributes['last_modify'] = time();
+            $adminUser = AdminUser::get($user_id);
+            if ($user['password']) $user['password'] = md5(md5($user['password']));
+            else $user['password'] = $adminUser->password;
+            $adminRole = AdminRole::where('user_id', $user_id)->find();
 
-            $role_attributes = Yii::$app->request->post('Role');
-
-            $adminUser = AdminUser::findOne($user_id);
-            if ($user_attributes['password']) $user_attributes['password'] = md5(md5($user_attributes['password']));
-            else $user_attributes['password'] = $adminUser->password;
-            $adminRole = AdminRole::findOne($user_id);
-            $adminUser->attributes = $user_attributes;
-
-            $submit = $adminUser->update()?200:500;
+            $submit = $adminUser->save($user, ['user_id' => $user_id]) ? 200 : 500;
             if ($submit == 200) {
                 if ($adminRole) {
-                    $adminRole->attributes = $role_attributes;
-                    $adminRole->update();
+                    $adminRole = AdminRole::where('user_id',$user_id)->find();
+                    $adminRole->role_id = $role['role_id'];
+                    $adminRole->save();
                 } else {
                     $adminRole = new AdminRole();
-                    $role_attributes['user_id'] = $user_id;
-                    $adminRole->attributes = $role_attributes;
-                    $adminRole->save();
+                    $role['user_id'] = $user_id;
+                    $adminRole->save($role);
                 }
             }
-            $this->refresh('&ref_sub='.$submit);
+            $this->redirect('update', ['user_id' => $user_id, 'ref_sub' => $submit]);
         }
-        $this->data['action'] = 'update&user_id='.$user_id;
-        $this->data['user_row'] = AdminUser::findOne(['user_id'=>$user_id]);
-        $this->data['role_row'] = AdminRole::findOne(['user_id'=>$user_id]);
-        $this->data['role_list'] = AdminGroup::findAll(['status'=>'active']);
 
-        return $this->render('update', $this->data);
+        $this->data['action'] = 'update/user_id/' . $user_id;
+        $this->data['user_row'] = AdminUser::find(['user_id' => $user_id]);
+        $this->data['role_row'] = AdminRole::where('user_id', $user_id)->find();
+        $this->data['role_list'] = AdminGroup::all(['status' => 'active']);
+
+        return $this->fetch('update', $this->data);
     }
 
     /**
      * 取消
      */
-    public function actionCancel()
+    public function cancel(Request $req)
     {
-        $user_id = Yii::$app->request->get('user_id');
-        if (!$user_id) return Json::encode(['code'=>500, 'msg'=>'没有获取请求的ID']);
-        $submit = AdminUser::updateAll(['status'=>'1'], 'user_id = :user_id', [':user_id'=>$user_id])?200:500;
-        if ($submit == 500) return Json::encode(['code'=>500, 'msg'=>'冻结失败']);
-        return Json::encode(['code'=>200]);
+        $user_id = $req->param('user_id');
+        if (!$user_id) return json(['code' => 500, 'msg' => '没有获取请求的ID']);
+        $adminUser = new AdminUser();
+        $submit = $adminUser->save(['status' => '1'], ['user_id' => $user_id]) ? 200 : 500;
+        if ($submit == 500) return json(['code' => 500, 'msg' => '冻结失败']);
+        return json(['code' => 200]);
     }
 }

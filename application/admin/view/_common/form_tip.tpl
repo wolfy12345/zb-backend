@@ -22,7 +22,7 @@
     <div class="alert alert-block alert-danger fade in form-error">
         <button type="button" class="close" data-dismiss="alert"></button>
         <h4 class="alert-heading">失败!</h4>
-        <p> 表单提交失败,请检查后重新提交</p>
+        <p> {$Request.param.msg ?? '表单提交失败,请检查后重新提交'}</p>
         <p>
             <a class="btn red"
                href="/{$Request.module}/{$Request.controller}/index"

@@ -15,5 +15,5 @@ use think\Model;
  */
 class AdminGroup extends Model
 {
-    
+    protected $pk = 'role_id';
 }

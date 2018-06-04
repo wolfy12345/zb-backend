@@ -1,7 +1,7 @@
 <div class="page-header navbar navbar-fixed-top">
     <div class="page-header-inner ">
         <div class="page-logo">
-            <a href="?r=admin/default/index"  class="logo-default">
+            <a href="/admin/index/index"  class="logo-default">
                 <h4 style="color: #b4bcc8" class="logo_img">微信系统管理</h4>
             </a>
             <div class="menu-toggler sidebar-toggler"> </div>
@@ -19,7 +19,7 @@
                     <ul class="dropdown-menu dropdown-menu-default">
 
                         <li>
-                            <a href="?r=admin/user/logout">
+                            <a href="/admin/user/logout">
                                 <i class="icon-key"></i> 退出 </a>
                         </li>
                     </ul>

@@ -64,11 +64,11 @@ class User extends Controller
      */
     public function logout()
     {
-        Yii::$app->session->remove('user_id');
-        Yii::$app->session->remove('login_account');
-        Yii::$app->session->remove('super');
+        Session::delete('user_id');
+        Session::delete('login_account');
+        Session::delete('super');
 
-        $this->redirect('?r=admin/user/login');
+        $this->redirect('/admin/user/login');
     }
 
     /**

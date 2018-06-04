@@ -76,7 +76,7 @@ class Role extends Controller
     {
 
         $this->data['title'] = '角色管理';
-        $this->data['breadcrumbs'] = [['label'=>'管理员和权限','url'=>'?r=admin/role/index'],['label'=>'角色管理','url'=>'?r=admin/role/index'],['label'=>'编辑']];
+        $this->data['breadcrumbs'] = [['label'=>'管理员和权限','url'=>'/admin/role/index'],['label'=>'角色管理','url'=>'/admin/role/index'],['label'=>'编辑']];
 
         $role_id = $req->param('role_id');
         if ($req->post())

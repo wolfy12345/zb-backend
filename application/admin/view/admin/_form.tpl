@@ -10,16 +10,16 @@
             </div>
             <div class="portlet-body">
                 <!-- BEGIN FORM-->
-                <form action="?r=admin/admin/<?php echo $action;?>" class="form-horizontal" id="validation-form" method="post">
+                <form action="/admin/admin/{$action}" class="form-horizontal" id="validation-form" method="post">
                     <div class="form-body">
-                        <?php echo $this->render('@app/app/backend/views/common/form_tip');?>
+                        {include file="_common/form_tip"}
                         <div class="form-group">
                             <label class="control-label col-md-3">登录名
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-2">
                                 <input type="text" name="User[login_account]" class="form-control"
-                                    value="<?php echo isset($user_row['login_account'])?$user_row['login_account']:'';?>"/>
+                                    value="{$user_row['login_account'] ?? ''}"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -37,7 +37,7 @@
                             </label>
                             <div class="col-md-2">
                                 <input type="text" name="User[truename]" class="form-control"
-                                       value="<?php echo isset($user_row['truename'])?$user_row['truename']:'';?>"/>
+                                       value="{$user_row['truename'] ?? ''}"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -47,9 +47,9 @@
                             <div class="col-md-2">
                                 <select class="bs-select form-control" name="Role[role_id]">
                                     <option value="0">--请选择--</option>
-                                    <?php foreach ($role_list as $v) :?>
-                                    <option <?php if(isset($role_row['role_id']) && $role_row['role_id']==$v['role_id']):?>selected<?php endif;?> value="<?php echo $v['role_id'];?>"><?php echo $v['group_name'];?></option>
-                                    <?php endforeach;?>
+                                    {foreach $role_list as $v}
+                                        <option {if isset($role_row['role_id']) AND $role_row['role_id']==$v['role_id']}selected{/if} value="{$v['role_id']}">{$v['group_name']}</option>
+                                    {/foreach}
                                 </select>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="_csrf" value="<?php echo Yii::$app->request->getCsrfToken()?>" />
+                    <input type="hidden" name="_csrf" value="{$Request.token}" />
                 </form>
                 <!-- END FORM-->
             </div>
