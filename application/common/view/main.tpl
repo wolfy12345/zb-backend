@@ -18,19 +18,23 @@
         <link href="/static/themes/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet">
         <link href="/static/themes/layouts/layout/css/custom.min.css" rel="stylesheet">
         <link href="/static/themes/backend/css/public.css" rel="stylesheet">
+        <link href="/static/themes/backend/css/bootstrapSwitch.css" rel="stylesheet">
+        <link href="/static/themes/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" position="1">
+        <link href="/static/themes/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" position="1">
+        <link href="/static/themes/global/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" position="1">
     </head>
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
-        {include file="_common/page_header"}
+        {include file="../../common/view/_common/page_header"}
         <div class="clearfix"> </div>
         <div class="page-container">
             <div class="page-sidebar-wrapper">
-                {include file="_common/page_sidebar"}
+                {include file="../../common/view/_common/page_sidebar"}
             </div>
             <div class="page-content-wrapper">
                 <div class="page-content">
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
-                            <li><a href="/zb/app/backend/index.php">初始页</a><i class="fa fa-circle"></i></li>
+                            <li><a href="/admin/index/index">初始页</a><i class="fa fa-circle"></i></li>
                             {foreach $breadcrumbs as $k=>$b}
                                 {if isset($b['url'])}
                                     <li><a href="{$b['url']}">{$b['label']}</a><i class="fa fa-circle"></i></li>
@@ -78,5 +82,10 @@
         <script src="/static/themes/global/plugins/flot/jquery.flot.categories.min.js"></script>
         <script src="/static/themes/backend/admin/default.js"></script>
         <script src="/static/themes/backend/admin/role.js"></script>
+        <script src="/static/themes/backend/global/bootstrapSwitch.js"></script>
+        <script src="/static/themes/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+        <script src="/static/themes/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+        <script src="/static/themes/global/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
+        <script src="/static/themes/backend/zb/cat.js"></script>    </body>
     </body>
 </html>

@@ -2,6 +2,5 @@
 
 {block name="content"}
     <h3 class="page-title">  </h3>
-
-    {include file="admin/_form"}
+    {include file="cat/_form"}
 {/block}

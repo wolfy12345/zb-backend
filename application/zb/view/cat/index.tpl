@@ -1,9 +1,7 @@
-<?php
-use app\app\backend\widgets\LinkPager;
-use app\app\backend\components\AppAdminAcl;
-$this->title = '分类管理';
-$this->params['breadcrumbs'] = [['label'=>'装B分类','url'=>'?r=zb/cat/index'],['label'=>'装B分类']];
-?>
+{extend name="../../common/view/main"}
+
+{block name="content"}
+    {php}use  app\common\components\AppAdminAcl;{/php}
 <h3 class="page-title"> 装B分类
     <small></small>
 </h3>
@@ -15,13 +13,12 @@ $this->params['breadcrumbs'] = [['label'=>'装B分类','url'=>'?r=zb/cat/index']
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <?php echo AppAdminAcl::filterButton('zb/cat/create',
-                                    '<a href="?r=zb/cat/create" class="btn sbold green"> 添加<i class="fa fa-plus"></i></a>');
-                                ?>
+                                {php}echo AppAdminAcl::filterButton('zb/cat/create',
+                                    '<a href="/zb/cat/create" class="btn sbold green"> 添加<i class="fa fa-plus"></i></a>');{/php}
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <?php echo $this->render('_search', $this->context->data);?>
+
                         </div>
                     </div>
                 </div>
@@ -37,39 +34,38 @@ $this->params['breadcrumbs'] = [['label'=>'装B分类','url'=>'?r=zb/cat/index']
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($dataProvider as $v):?>
+                        {foreach $list as $v}
                             <tr class="odd gradeX">
                                 <td>
-                                    <?php echo AppAdminAcl::filterButton('zb/cat/update', '<a href="?r=zb/cat/update&cat_id='.$v['cat_id'].'" type="button" class="btn btn-sm btn-info">编辑</a>');?>
-                                    <?php echo AppAdminAcl::filterButton('zb/cat/delete', '<a data-href="?r=zb/cat/delete&cat_id='.$v['cat_id'].'" type="button" class="btn btn-sm btn-danger delete">删除</a>');?>
+                                    {php}echo AppAdminAcl::filterButton('zb/cat/update',
+                                        '<a href="/zb/cat/update/cat_id/'.$v['cat_id'].'" type="button" class="btn btn-sm btn-info">编辑</a>');{/php}
+                                    {php}echo AppAdminAcl::filterButton('zb/cat/delete',
+                                        '<a data-href="/zb/cat/delete/cat_id/'.$v['cat_id'].'" type="button" class="btn btn-sm btn-danger delete">删除</a>');{/php}
                                 </td>
                                 <td>
-                                    <?php echo $v['cat_name'];?>
+                                    {$v['cat_name']}
                                 </td>
                                 <td>
-                                    <?php if ($v['cat_img']):?>
-                                        <img src="<?php echo Yii::$app->params['img_host'].$v['cat_img']?>" width="64" height="34">
-                                    <?php endif;?>
+                                    {if $v['cat_img']}
+                                        <img src="{$Think.config.img_host}/{$v['cat_img']}" width="64" height="34">
+                                    {/if}
                                 </td>
                                 <td>
-                                    <?php echo $v['p_order'];?>
+                                    {$v['p_order']}
                                 </td>
                                 <td>
-                                    <?php echo Yii::$app->params['bool_status'][$v['show_status']];?>
+                                    {$Think.config.bool_status[$v['show_status']]}
                                 </td>
                             </tr>
-                        <?php endforeach;?>
+                        {/foreach}
                         </tbody>
                     </table>
                 </div>
             </div>
             <div>
-                <?php
-                echo LinkPager::widget([
-                    'pagination' => $pages,
-                ]);
-                ?>
+                {$page|raw}
             </div>
         </div>
     </div>
 </div>
+{/block}

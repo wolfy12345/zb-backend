@@ -12,7 +12,7 @@
                 <!-- BEGIN FORM-->
                 <form action="/admin/role/{$action}" class="form-horizontal" id="validation-form" method="post">
                     <div class="form-body">
-                        {include file="_common/form_tip"}
+                        {include file="../../common/view/_common/form_tip"}
                         <div class="form-group">
                             <label class="control-label col-md-3">
                                 <input type="checkbox" class="group-checkable" data-set="#table .checkboxes" />全选

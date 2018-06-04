@@ -1,4 +1,4 @@
-{extend name="main"}
+{extend name="../../common/view/main"}
 
 {block name="content"}
 <h3 class="page-title"> 权限错误

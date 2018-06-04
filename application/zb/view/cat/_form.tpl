@@ -8,16 +8,16 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <form action="?r=zb/cat/<?php echo $action;?>" class="form-horizontal" id="validation-form" method="post">
+                <form action="/zb/cat/{$action}" class="form-horizontal" id="validation-form" method="post">
                     <div class="form-body">
-                        <?php echo $this->render('@app/app/backend/views/common/form_tip');?>
+                        {include file="../../common/view/_common/form_tip"}
                         <div class="form-group">
                             <label class="control-label col-md-3">名称
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-3">
                                 <input type="text" name="Cat[cat_name]" class="form-control"
-                                       value="<?php echo isset($cat_row['cat_name'])?$cat_row['cat_name']:'';?>"/>
+                                       value="{$cat_row['cat_name'] ?? ''}"/>
                             </div>
                         </div>
 
@@ -27,9 +27,9 @@
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                                          style="width: 360px; height: 180px;">
-                                        <?php if (isset($cat_row['cat_img']) && $cat_row['cat_img']):?>
-                                            <img src="<?php echo Yii::$app->params['img_host'].$cat_row['cat_img'];?>">
-                                        <?php endif;?>
+                                        {if isset($cat_row['cat_img']) AND $cat_row['cat_img']}
+                                            <img src="{$Think.config.img_host}/{$cat_row['cat_img']}">
+                                        {/if}
                                     </div>
                                     <div>
                                         <span class="btn red btn-outline btn-file">
@@ -51,9 +51,9 @@
                             <label class="control-label col-md-3">显示：</label>
                             <div class="col-md-9">
                                 <input type="checkbox" data-on-text="&nbsp;是&nbsp;" data-off-text="&nbsp;否&nbsp;"
-                                    <?php echo (isset($cat_row['show_status'])&&$cat_row['show_status']==1)||!isset($cat_row['show_status'])?'checked':'';?>
+                                       {if (isset($cat_row['show_status'])&&$cat_row['show_status']==1)||!isset($cat_row['show_status'])}'checked'{else /}''{/if}
                                        class="make-switch switch-radio1" data-size="small">
-                                <input type="hidden" value="<?php echo (isset($cat_row['show_status'])&&$cat_row['show_status']==1)||!isset($cat_row['show_status'])?1:0;?>" name="Cat[show_status]" class="condition-all1">
+                                <input type="hidden" value="{if (isset($cat_row['show_status'])&&$cat_row['show_status']==1)||!isset($cat_row['show_status'])}1{else /}0{/if}" name="Cat[show_status]" class="condition-all1">
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
                             </label>
                             <div class="col-md-1">
                                 <input type="text" name="Cat[p_order]" class="form-control"
-                                       value="<?php echo isset($cat_row['p_order'])?$cat_row['p_order']:'99';?>"/>
+                                       value="{$cat_row['p_order'] ?? '99'}"/>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="_csrf" value="<?php echo Yii::$app->request->getCsrfToken()?>" />
+                    <input type="hidden" name="_csrf" value="{$Request.token}" />
                 </form>
             </div>
         </div>

@@ -66,7 +66,7 @@ class Index extends Controller
     public function permission()
     {
         $this->data['title'] = '权限错误';
-        $this->data['breadcrumbs'] = [['label'=>'管理员和权限','url'=>'?r=admin/admin/index'],['label'=>'权限错误']];
+        $this->data['breadcrumbs'] = [['label'=>'管理员和权限','url'=>'/admin/admin/index'],['label'=>'权限错误']];
 
         return $this->fetch('permission', $this->data);
     }

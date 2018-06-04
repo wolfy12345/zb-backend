@@ -12,7 +12,7 @@
                 <!-- BEGIN FORM-->
                 <form action="/admin/admin/{$action}" class="form-horizontal" id="validation-form" method="post">
                     <div class="form-body">
-                        {include file="_common/form_tip"}
+                        {include file="../../common/view/_common/form_tip"}
                         <div class="form-group">
                             <label class="control-label col-md-3">登录名
                                 <span class="required"> * </span>

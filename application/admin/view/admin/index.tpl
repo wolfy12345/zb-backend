@@ -1,4 +1,4 @@
-{extend name="main"}
+{extend name="../../common/view/main"}
 
 {block name="content"}
     {php}use  app\common\components\AppAdminAcl;{/php}
