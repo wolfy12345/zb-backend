@@ -12,6 +12,7 @@ namespace app\zb\controller;
 use app\common\components\AppAdminAcl;
 use app\common\components\UploadFile;
 use app\zb\model\ZbCat;
+use app\zb\model\ZbContent;
 use think\Controller;
 use think\facade\Session;
 use think\Request;
@@ -108,7 +109,7 @@ class Cat extends Controller
             $zbCat = new ZbCat();
             $submit = $zbCat->save($cat, ['cat_id' => $cat_id]) ? 200 : 500;
             if ($submit == 200) $this->redirect('/zb/cat/index');
-            else $this->redirect('create', ['ref_sub' => $submit]);
+            else $this->redirect('update', ['cat_id' => $cat_id, 'ref_sub' => $submit]);
         }
         $this->data['cat_row'] = ZbCat::find(['cat_id' => $cat_id]);
         $this->data['action'] = 'update/cat_id/' . $cat_id;
@@ -118,18 +119,21 @@ class Cat extends Controller
     /**
      * 删除
      */
-    public function delete()
+    public function delete(Request $req)
     {
-        $cat_id = Yii::$app->request->get('cat_id');
-        if (!$cat_id) return Json::encode(['code' => 500, 'msg' => '没有获取请求的ID']);
-        if (ZbContent::find()->select('content_id')->where(['cat_id' => $cat_id])->count())
-            return Json::encode(['code' => 500, 'msg' => '当然分类存在素材不可删除']);
+        $cat_id = $req->param('cat_id');
+        if (!$cat_id) return json(['code' => 500, 'msg' => '没有获取请求的ID']);
+
+        if (ZbContent::where('cat_id', $cat_id)->count())
+            return json(['code' => 500, 'msg' => '当然分类存在素材不可删除']);
 
         $attributes['disabled'] = 'true';
         $attributes['update_time'] = time();
-        $attributes['updater'] = Yii::$app->session['user_id'];
-        $submit = ZbCat::updateAll($attributes, 'cat_id = :cat_id', [':cat_id' => $cat_id]) ? 200 : 500;
-        if ($submit == 500) return Json::encode(['code' => 500, 'msg' => '删除失败']);
-        return Json::encode(['code' => 200]);
+        $attributes['updater'] = Session::get("user_id");
+
+        $zbCat = new ZbCat();
+        $submit = $zbCat->save($attributes, ['cat_id' => $cat_id]) ? 200 : 500;
+        if ($submit == 500) return json(['code' => 500, 'msg' => '删除失败']);
+        return json(['code' => 200]);
     }
 }
