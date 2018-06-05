@@ -1,10 +1,8 @@
-<form action="" method="post" class="search-single">
-    <input type="hidden" name="r" value="zb/content/index">
+<form action="" method="get" class="search-single">
+    <input type="hidden" name="r" value="zb/ad/index">
     <select class="bs-select form-control input-small" name="Single[name]" data-style="btn-success">
         <option value="name"
-                {if isset($search_attributes['Single']['name']) AND $search_attributes['Single']['name']=='name'}selected{/if}>名称</option>
-        <option value="cat"
-                {if isset($search_attributes['Single']['name']) AND $search_attributes['Single']['name']=='cat'}selected{/if}>分类</option>
+                {if isset($search_attributes['Single']['name']) AND $search_attributes['Single']['name']=='title'}selected{/if}>名称</option>
     </select>
     <input type="text" class="form-control input-inline" placeholder=""
            value="{php}echo (isset($search_attributes['Single']['search_val'])&&$search_attributes['Single']['search_val']) ? $search_attributes['Single']['search_val'] : '';{/php}" name="Single[search_val]">

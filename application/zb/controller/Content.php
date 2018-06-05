@@ -149,8 +149,8 @@ class Content extends Controller
         return json(['code' => 200]);
     }
 
-    public function actionCache()
-    {
-        Yii::$app->cache->flush();
-    }
+//    public function actionCache()
+//    {
+//        Yii::$app->cache->flush();
+//    }
 }

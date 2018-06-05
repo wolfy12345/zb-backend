@@ -15,7 +15,9 @@
 
 return [
     // 驱动方式
-    'type'   => 'File',
+    'type'   => 'memcache',
+    'host' => '127.0.0.1',
+    'post' => 11211,
     // 缓存保存目录
     'path'   => '',
     // 缓存前缀

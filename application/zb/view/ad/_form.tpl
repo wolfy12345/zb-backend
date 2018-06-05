@@ -8,9 +8,9 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <form action="?r=zb/ad/<?php echo $action;?>" class="form-horizontal" id="validation-form" method="post">
+                <form action="/zb/ad/{$action}" class="form-horizontal" id="validation-form" method="post">
                     <div class="form-body">
-                        <?php echo $this->render('@app/app/backend/views/common/form_tip');?>
+                        {include file="../../common/view/_common/form_tip"}
                         <div class="form-group">
                             <label class="control-label col-md-3">选择类型
                                 <span class="required"> * </span>
@@ -18,10 +18,10 @@
                             <div class="col-md-2">
                                 <select class="form-control" name="Ad[position_id]">
                                     <option value="0">--请选择分类--</option>
-                                    <?php foreach ($ad_type as $k=>$v):?>
-                                        <option value="<?php echo $k;?>"
-                                                <?php if (isset($ad_row['position_id'])&&$ad_row['position_id']==$k):?>selected<?php endif;?>><?php echo $v;?></option>
-                                    <?php endforeach;?>
+                                    {foreach $ad_type as $k=>$v}
+                                        <option value="{$k}"
+                                                {if isset($ad_row['position_id']) AND $ad_row['position_id']==$k}selected{/if}>{$v}</option>
+                                    {/foreach}
                                 </select>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                             </label>
                             <div class="col-md-3">
                                 <input type="text" name="Ad[title]" class="form-control"
-                                       value="<?php echo isset($ad_row['title'])?$ad_row['title']:'';?>"/>
+                                       value="{$ad_row['title'] ?? ''}"/>
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
                             </label>
                             <div class="col-md-3">
                                 <input type="text" name="Ad[link]" class="form-control"
-                                       value="<?php echo isset($ad_row['link'])?$ad_row['link']:'';?>"/>
+                                       value="{$ad_row['link'] ?? ''}"/>
                             </div>
                         </div>
 
@@ -52,9 +52,9 @@
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-preview thumbnail" data-trigger="fileinput"
                                          style="width: 320px; height: 79px;">
-                                        <?php if (isset($ad_row['logo']) && $ad_row['logo']):?>
-                                            <img src="<?php echo Yii::$app->params['img_host'].$ad_row['logo'];?>">
-                                        <?php endif;?>
+                                        {if isset($ad_row['logo']) AND $ad_row['logo']}
+                                            <img src="{$Think.config.img_host}/{$ad_row['logo']}">
+                                        {/if}
                                     </div>
                                     <div>
                                         <span class="btn red btn-outline btn-file">
@@ -76,9 +76,9 @@
                             <label class="control-label col-md-3">显示：</label>
                             <div class="col-md-9">
                                 <input type="checkbox" data-on-text="&nbsp;是&nbsp;" data-off-text="&nbsp;否&nbsp;"
-                                    <?php echo (isset($ad_row['status'])&&$ad_row['status'])||!isset($ad_row['status'])?'checked':'';?>
+                                       {if isset($ad_row['status']) AND $ad_row['status']==1}checked{else /}''{/if}
                                        class="make-switch switch-radio1" data-size="small">
-                                <input type="hidden" value="<?php echo (isset($ad_row['status'])&&$ad_row['status'])||!isset($ad_row['status'])==1?1:0;?>" name="Ad[status]" class="condition-all1">
+                                <input type="hidden" value="{if isset($ad_row['status']) AND $ad_row['status']==1}1{else /}0{/if}" name="Ad[status]" class="condition-all1">
                             </div>
                         </div>
 
@@ -88,7 +88,7 @@
                             </label>
                             <div class="col-md-1">
                                 <input type="text" name="Ad[p_order]" class="form-control"
-                                       value="<?php echo isset($ad_row['p_order'])?$ad_row['p_order']:'99';?>"/>
+                                       value="{$ad_row['p_order'] ?? '99'}"/>
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="_csrf" value="<?php echo Yii::$app->request->getCsrfToken()?>" />
+                    <input type="hidden" name="_csrf" value="{$Request.token}" />
                 </form>
             </div>
         </div>

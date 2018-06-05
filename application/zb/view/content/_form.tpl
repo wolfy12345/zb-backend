@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <form action="?r=zb/content/<?php echo $action;?>" class="form-horizontal" id="validation-form" method="post">
+                <form action="/zb/content/{$action}" class="form-horizontal" id="validation-form" method="post">
                     <div class="form-body">
                         {include file="../../common/view/_common/form_tip"}
                         <div class="form-group">
@@ -18,10 +18,10 @@
                             <div class="col-md-2">
                                 <select class="form-control" name="Content[cat_id]">
                                     <option value="0">--请选择分类--</option>
-                                    <?php foreach ($cat_list as $v):?>
-                                        <option value="<?php echo $v['cat_id'];?>"
-                                                <?php if (isset($content_row['cat_id'])&&$content_row['cat_id']==$v['cat_id']):?>selected<?php endif;?>><?php echo $v['cat_name'];?></option>
-                                    <?php endforeach;?>
+                                    {foreach $cat_list as $k=>$v}
+                                        <option value="{$v['cat_id']}"
+                                                {if isset($content_row['cat_id']) AND $content_row['cat_id']==$k}selected{/if}>{$v['cat_name']}</option>
+                                    {/foreach}
                                 </select>
                             </div>
                         </div>
