@@ -90,12 +90,12 @@ class AppAdminAcl
         if ($super == 1) return $item;
         foreach ($item as $k=>$v) {
             foreach ($v['ctl'] as $kk=>$vv) {
-                if((isset($vv['module']) && request()->module() == $vv['module']) || request()->module() == $v['module'] && in_array(request()->controller(), $vv['list_ctl'])) {
-                    $vv['liclass'] = "active open";
-                }
-                if(request()->module() == $v['module'] && in_array(request()->controller(), $vv['list_ctl'])) {
-                    $vv['spanclass'] = "open";
-                }
+//                if(((isset($vv['module']) && request()->module() == $vv['module']) || request()->module() == $v['module']) && in_array(request()->controller(), $vv['list_ctl'])) {
+//                    $vv['liclass'] = "active open";
+//                }
+//                if(request()->module() == $v['module'] && in_array(request()->controller(), $vv['list_ctl'])) {
+//                    $vv['spanclass'] = "open";
+//                }
 
                 foreach ($vv['act'] as $kkk=>$vvv) {
                     foreach ($vvv['list_side'] as $side_item) {
@@ -109,6 +109,7 @@ class AppAdminAcl
             }
             if (empty($item[$k]['ctl'])) unset($item[$k]);
         }
+//        print_r($item);
         return $item;
     }
 

@@ -22,12 +22,12 @@
         </li>
         {foreach $aclList as $k=>$v}
             {foreach $v['ctl'] as $kk=>$vv}
-                <li class="nav-item {$vv['liclass'] ?? ''}">
+                <li class="nav-item {if ((isset($vv['module']) AND $Request.module == $vv['module']) OR $Request.module == $v['module']) AND in_array(strtolower($Request.controller), $vv['list_ctl'])}active open{/if}">
                     <a class="nav-link nav-toggle" href="javascript:;">
                         <i class="{$vv['icon']}"></i>
                         <span class="title">{$vv['name']}</span>
                         <span class="selected"></span>
-                        <span class="arrow {$vv['spanclass'] ?? ''}"></span>
+                        <span class="arrow {if $Request.module == $v['module'] AND in_array(strtolower($Request.controller), $vv['list_ctl'])}open{/if}"></span>
                     </a>
                     <ul class="sub-menu">
                         {foreach $vv['act'] as $kkk=>$vvv}

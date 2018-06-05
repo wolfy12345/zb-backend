@@ -33,7 +33,7 @@
                     <table id="table" class="table table-striped table-bordered table-hover table-checkable order-column">
                         <thead>
                             <tr>
-                                <th width="10%"> 操作 </th>
+                                <th width="12%"> 操作 </th>
                                 <th width="8%"> 名称 </th>
                                 <th width="8%"> 分类 </th>
                                 <th width="8%"> 标题图片 </th>
