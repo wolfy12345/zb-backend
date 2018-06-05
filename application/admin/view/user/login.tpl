@@ -1,5 +1,9 @@
 {extend name="main_login" /}
 
+{block name="css"}
+    <link href="/static/themes/pages/css/login.min.css" rel="stylesheet">
+{/block}
+
 {block name="content"}
 <!-- BEGIN LOGIN FORM -->
 <form class="login-form" action="/admin/user/login" method="post" novalidate="novalidate">
@@ -26,4 +30,11 @@
     <input type="hidden" name="_csrf" value="{$Request.token}" />
 </form>
 <!-- END LOGIN FORM -->
+{/block}
+{block name="js"}
+    {__block__}
+    <script src="/static/themes/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+    <script src="/static/themes/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
+    <script src="/static/themes/global/plugins/select2/js/select2.full.min.js"></script>
+    <script src="/static/themes/pages/scripts/login.js"></script>
 {/block}

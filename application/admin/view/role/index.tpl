@@ -56,3 +56,7 @@
     </div>
 </div>
 {/block}
+{block name="js"}
+    {__block__}
+    <script src="/static/themes/backend/admin/role.js"></script>
+{/block}

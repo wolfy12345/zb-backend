@@ -5,3 +5,7 @@
 
     {include file="admin/_form"}
 {/block}
+{block name="js"}
+    {__block__}
+    <script src="/static/themes/backend/admin/admin.js"></script>
+{/block}

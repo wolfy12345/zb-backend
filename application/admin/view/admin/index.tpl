@@ -32,7 +32,7 @@
                         <tr>
 <!--                            <th>-->
 <!--                                <input type="checkbox" class="group-checkable" data-set="#table .checkboxes" />-->
-                            </th>
+<!--                            </th>-->
                             <th> 操作 </th>
                             <th> 登录名 </th>
                             <th> 真实名 </th>
@@ -77,4 +77,8 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 </div>
+{/block}
+{block name="js"}
+    {__block__}
+    <script src="/static/themes/backend/admin/admin.js"></script>
 {/block}
