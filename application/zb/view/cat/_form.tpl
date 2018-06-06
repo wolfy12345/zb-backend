@@ -51,9 +51,9 @@
                             <label class="control-label col-md-3">显示：</label>
                             <div class="col-md-9">
                                 <input type="checkbox" data-on-text="&nbsp;是&nbsp;" data-off-text="&nbsp;否&nbsp;"
-                                       {if (isset($cat_row['show_status'])&&$cat_row['show_status']==1)||!isset($cat_row['show_status'])}'checked'{else /}''{/if}
+                                       {if isset($cat_row['show_status']) AND $cat_row['show_status']==1}checked{else /}''{/if}
                                        class="make-switch switch-radio1" data-size="small">
-                                <input type="hidden" value="{if (isset($cat_row['show_status'])&&$cat_row['show_status']==1)||!isset($cat_row['show_status'])}1{else /}0{/if}" name="Cat[show_status]" class="condition-all1">
+                                <input type="hidden" value="{if (isset($cat_row['show_status'])&&$cat_row['show_status']==1)}1{else /}0{/if}" name="Cat[show_status]" class="condition-all1">
                             </div>
                         </div>
 
