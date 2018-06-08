@@ -35,12 +35,53 @@ validate(
         'Content[cat_id]':{'required': true, 'min':1},
         'Content[name]':{'required': true},
         'Content[title]':{'required': true},
-        'Content[p_order]':{'required': true}
+        'Content[p_order]':{'required': true},
+        'Content[page_type]':{'required': true, 'neq':0}
     },
     {
         'Content[cat_id]':{'required': '分类不能为空', 'min':'分类不能为空'},
         'Content[name]':{'required': '名称不能为空'},
         'Content[title]':{'required': '标题不能为空'},
-        'Content[p_order]':{'required': '排序不能为空'}
+        'Content[p_order]':{'required': '排序不能为空'},
+        'Content[page_type]':{'required': '请完善输入页信息', 'neq':'请完善输入页信息'}
     }
 );
+
+$("#pageType").on('change', function() {
+    var pageType = $(this).val();
+    if(pageType == 'single') {
+        $("#singleDiv").removeClass('hide');
+        $("#multiDiv").addClass('hide');
+    } else {
+        $("#multiDiv").removeClass('hide');
+        $("#singleDiv").addClass('hide');
+    }
+});
+
+$(".optType").on('change', function() {
+    var optType = $(this).val();
+    if(optType == 'radio' || optType == 'select') {
+        $(this).next().removeClass('hide');
+    } else {
+        $(this).next().addClass('hide');
+        $("[name='Add[values]']").val('');
+    }
+});
+
+$("#addOpt").on("click", function() {
+    var text = $("[name='Add[text]']").val();
+    var optType = $("[name='Add[optType]']").val();
+    var values = $("[name='Add[values]']").val();
+    
+    var html = '<span class="label label-success margin-right-10 removeOpt">'+text+'<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
+        '<input type="hidden" name="text[]" value="'+text+'" />' +
+        '<input type="hidden" name="optType[]" value="'+optType+'" />' +
+        '<input type="hidden" name="values[]" value="'+values+'" /></span>';
+    $("#list").append(html);
+
+    return false;
+})
+
+$("#list").on("click", ".removeOpt", function() {
+    $(this).remove();
+})

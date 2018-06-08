@@ -92,6 +92,19 @@ class Content extends Controller
             if ($file['img_icon']) $content['img_icon'] = UploadFile::common($file['img_icon'], 'zb_content', false);
             if ($file['img_example']) $content['img_example'] = UploadFile::common($file['img_example'], 'zb_content', false);
 
+            $text = $attributes['text'];
+            $optType = $attributes['optType'];
+            $values = $attributes['values'];
+            $inputList = [];
+            foreach($text as $k => $v) {
+                $inputItem = [];
+                $inputItem['text'] = $v;
+                $inputItem['optType'] = $optType[$k];
+                $inputItem['values'] = explode(',', $values[$k]);
+                $inputList[] = $inputItem;
+            }
+            $content['input_list'] = json_encode($inputList, JSON_UNESCAPED_UNICODE);
+
             $zbContent = new ZbContent();
             $submit = $zbContent->save($content) ? 200 : 500;
             if ($submit == 200) $this->redirect('/zb/content/index');
@@ -122,11 +135,27 @@ class Content extends Controller
             if ($file['img_icon']) $content['img_icon'] = UploadFile::common($file['img_icon'], 'zb_content', false);
             if ($file['img_example']) $content['img_example'] = UploadFile::common($file['img_example'], 'zb_content', false);
 
+            $text = $attributes['text'];
+            $optType = $attributes['optType'];
+            $values = $attributes['values'];
+            $inputList = [];
+            foreach($text as $k => $v) {
+                $inputItem = [];
+                $inputItem['text'] = $v;
+                $inputItem['optType'] = $optType[$k];
+                $inputItem['values'] = explode(',', $values[$k]);
+                $inputList[] = $inputItem;
+            }
+            $content['input_list'] = json_encode($inputList, JSON_UNESCAPED_UNICODE);
+
             $zbContent = new ZbContent();
             $submit = $zbContent->save($content, ['content_id' => $content_id]) ? 200 : 500;
             $this->redirect('update', ['content_id' => $content_id, 'ref_sub' => $submit]);
         }
         $this->data['content_row'] = ZbContent::get($content_id);
+        if(!empty($this->data['content_row']['input_list'])) {
+            $this->data['content_row']['input_list'] = json_decode($this->data['content_row']['input_list'], true);
+        }
         $this->data['cat_list'] = ZbCat::all(['disabled' => 'false']);
         $this->data['action'] = 'update/content_id/' . $content_id;
         return $this->fetch('update', $this->data);

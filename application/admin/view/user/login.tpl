@@ -1,6 +1,7 @@
 {extend name="main_login" /}
 
 {block name="css"}
+    {__block__}
     <link href="/static/themes/pages/css/login.min.css" rel="stylesheet">
 {/block}
 
