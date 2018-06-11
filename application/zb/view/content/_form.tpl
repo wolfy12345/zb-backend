@@ -20,7 +20,7 @@
                                     <option value="0">--请选择分类--</option>
                                     {foreach $cat_list as $k=>$v}
                                         <option value="{$v['cat_id']}"
-                                                {if isset($content_row['cat_id']) AND $content_row['cat_id']==$k}selected{/if}>{$v['cat_name']}</option>
+                                                {if isset($content_row['cat_id']) AND $content_row['cat_id']==$v['cat_id']}selected{/if}>{$v['cat_name']}</option>
                                     {/foreach}
                                 </select>
                             </div>

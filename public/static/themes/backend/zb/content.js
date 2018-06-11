@@ -36,14 +36,14 @@ validate(
         'Content[name]':{'required': true},
         'Content[title]':{'required': true},
         'Content[p_order]':{'required': true},
-        'Content[page_type]':{'required': true, 'neq':0}
+        // 'Content[page_type]':{'required': true, 'neq':0}
     },
     {
         'Content[cat_id]':{'required': '分类不能为空', 'min':'分类不能为空'},
         'Content[name]':{'required': '名称不能为空'},
         'Content[title]':{'required': '标题不能为空'},
         'Content[p_order]':{'required': '排序不能为空'},
-        'Content[page_type]':{'required': '请完善输入页信息', 'neq':'请完善输入页信息'}
+        // 'Content[page_type]':{'required': '请完善输入页信息', 'neq':'请完善输入页信息'}
     }
 );
 
