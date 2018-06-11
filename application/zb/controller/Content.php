@@ -70,6 +70,8 @@ class Content extends Controller
         $this->data['list'] = $list;
         $this->data['page'] = $page;
 
+        $this->data['catList'] = ZbCat::all(['disabled' => 'false']);
+
         return $this->fetch('index', $this->data);
     }
 

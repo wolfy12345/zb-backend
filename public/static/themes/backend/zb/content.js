@@ -47,6 +47,17 @@ validate(
     }
 );
 
+$("#search").on("change", function () {
+    var search = $(this).val();
+    if(search == 'title') {
+        $("#title").removeClass('hide').removeAttr("disabled");
+        $("#cat").addClass('hide').attr("disabled", "disabled");
+    } else if(search == 'cat') {
+        $("#title").addClass('hide').attr("disabled", "disabled");
+        $("#cat").removeClass('hide').removeAttr("disabled");
+    }
+});
+
 $("#pageType").on('change', function() {
     var pageType = $(this).val();
     if(pageType == 'single') {

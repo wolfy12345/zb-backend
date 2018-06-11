@@ -33,10 +33,10 @@ class Search
      */
     public static function content($params, $model)
     {
-        if (isset($params['Single']['name']) && $params['Single']['name'] == 'name')
-            $model = $model->where("t1.name LIKE '%{$params['Single']['search_val']}%'");
+        if (isset($params['Single']['name']) && $params['Single']['name'] == 'title')
+            $model = $model->where("t1.title LIKE '%{$params['Single']['search_val']}%'");
         if (isset($params['Single']['name']) && $params['Single']['name'] == 'cat')
-            $model = $model->where("t2.cat_name LIKE '%{$params['Single']['search_val']}%'");
+            $model = $model->where("t1.cat_id = '{$params['Single']['search_val']}'");
 
         return $model;
     }
