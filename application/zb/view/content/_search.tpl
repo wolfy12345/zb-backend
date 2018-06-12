@@ -1,5 +1,4 @@
-<form action="" method="post" class="search-single">
-    <input type="hidden" name="r" value="zb/content/index">
+<form action="" method="get" class="search-single">
     <select id="search" class="bs-select form-control input-small" name="Single[name]" data-style="btn-success">
         <option value="title"
                 {if isset($search_attributes['Single']['name']) AND $search_attributes['Single']['name']=='title'}selected{/if}>标题</option>

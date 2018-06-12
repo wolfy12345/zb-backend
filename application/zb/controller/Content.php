@@ -65,7 +65,7 @@ class Content extends Controller
 
         $zbCat = new ZbCat();
         $data = $data->leftJoin($zbCat->getTable() . ' t2', 't1.cat_id = t2.cat_id');
-        $list = $data->order('t1.p_order ' . SORT_ASC)->paginate($this->pageSize);
+        $list = $data->order('t1.p_order ' . SORT_ASC)->paginate($this->pageSize, false, ['query' => $search]);
         $page = $list->render();
         $this->data['list'] = $list;
         $this->data['page'] = $page;
@@ -94,18 +94,20 @@ class Content extends Controller
             if ($file['img_icon']) $content['img_icon'] = UploadFile::common($file['img_icon'], 'zb_content', false);
             if ($file['img_example']) $content['img_example'] = UploadFile::common($file['img_example'], 'zb_content', false);
 
-            $text = $attributes['text'];
-            $optType = $attributes['optType'];
-            $values = $attributes['values'];
-            $inputList = [];
-            foreach($text as $k => $v) {
-                $inputItem = [];
-                $inputItem['text'] = $v;
-                $inputItem['optType'] = $optType[$k];
-                $inputItem['values'] = explode(',', $values[$k]);
-                $inputList[] = $inputItem;
+            if(isset($attributes['text']) && !empty($attributes['text'])) {
+                $text = $attributes['text'];
+                $optType = $attributes['optType'];
+                $values = $attributes['values'];
+                $inputList = [];
+                foreach ($text as $k => $v) {
+                    $inputItem = [];
+                    $inputItem['text'] = $v;
+                    $inputItem['optType'] = $optType[$k];
+                    $inputItem['values'] = explode(',', $values[$k]);
+                    $inputList[] = $inputItem;
+                }
+                $content['input_list'] = json_encode($inputList, JSON_UNESCAPED_UNICODE);
             }
-            $content['input_list'] = json_encode($inputList, JSON_UNESCAPED_UNICODE);
 
             $zbContent = new ZbContent();
             $submit = $zbContent->save($content) ? 200 : 500;
@@ -125,7 +127,6 @@ class Content extends Controller
         $this->data['title'] = '素材管理';
         $this->data['breadcrumbs'] = [['label'=>'素材管理','url'=>'/zb/content/index'],['label'=>'编辑']];
 
-
         $content_id = $req->param("content_id");
         if ($req->post()) {
             $attributes = $req->param();
@@ -137,18 +138,20 @@ class Content extends Controller
             if ($file['img_icon']) $content['img_icon'] = UploadFile::common($file['img_icon'], 'zb_content', false);
             if ($file['img_example']) $content['img_example'] = UploadFile::common($file['img_example'], 'zb_content', false);
 
-            $text = $attributes['text'];
-            $optType = $attributes['optType'];
-            $values = $attributes['values'];
-            $inputList = [];
-            foreach($text as $k => $v) {
-                $inputItem = [];
-                $inputItem['text'] = $v;
-                $inputItem['optType'] = $optType[$k];
-                $inputItem['values'] = explode(',', $values[$k]);
-                $inputList[] = $inputItem;
+            if(isset($attributes['text']) && !empty($attributes['text'])) {
+                $text = $attributes['text'];
+                $optType = $attributes['optType'];
+                $values = $attributes['values'];
+                $inputList = [];
+                foreach($text as $k => $v) {
+                    $inputItem = [];
+                    $inputItem['text'] = $v;
+                    $inputItem['optType'] = $optType[$k];
+                    $inputItem['values'] = explode(',', $values[$k]);
+                    $inputList[] = $inputItem;
+                }
+                $content['input_list'] = json_encode($inputList, JSON_UNESCAPED_UNICODE);
             }
-            $content['input_list'] = json_encode($inputList, JSON_UNESCAPED_UNICODE);
 
             $zbContent = new ZbContent();
             $submit = $zbContent->save($content, ['content_id' => $content_id]) ? 200 : 500;
