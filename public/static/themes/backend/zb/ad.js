@@ -14,13 +14,26 @@ validate(
     {
         'Ad[position_id]':{'required': true, 'min':1},
         'Ad[title]':{'required': true},
-        'Ad[link]':{'required': true},
-        'Ad[p_order]':{'required': true}
+        // 'Ad[link]':{'required': true},
+        'Ad[p_order]':{'required': true},
+        'Ad[type]':{'required': true}
     },
     {
         'Ad[position_id]':{'required': '类型不能为空', 'min':'类型不能为空'},
         'Ad[title]':{'required': '标题不能为空'},
-        'Ad[link]':{'required': '链接不能为空'},
-        'Ad[p_order]':{'required': '排序不能为空'}
+        // 'Ad[link]':{'required': '链接不能为空'},
+        'Ad[p_order]':{'required': '排序不能为空'},
+        'Ad[type]':{'required': '跳转类型不能为空'}
     }
 );
+
+$("#type").on("change", function () {
+    var type = $(this).val();
+    if(type == 1) {
+        $("#innerDiv").removeClass("hide");
+        $("#outerDiv").addClass("hide");
+    } else if (type == 2) {
+        $("#innerDiv").addClass("hide");
+        $("#outerDiv").removeClass("hide");
+    }
+})

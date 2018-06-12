@@ -11,8 +11,67 @@
                 <form action="/zb/ad/{$action}" class="form-horizontal" id="validation-form" method="post">
                     <div class="form-body">
                         {include file="../../common/view/_common/form_tip"}
+
                         <div class="form-group">
-                            <label class="control-label col-md-3">选择类型
+                            <label class="control-label col-md-3">跳转类型
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-2">
+                                <select class="form-control" name="Ad[type]" id="type">
+                                    <option value="1" {if isset($ad_row['type']) AND $ad_row['type']==1}selected{/if}>内部素材</option>
+                                    <option value="2" {if isset($ad_row['type']) AND $ad_row['type']==2}selected{/if}>外部小程序</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group {if isset($ad_row['type']) AND $ad_row['type']==2}hide{/if}" id="innerDiv">
+                            <label class="control-label col-md-3">关联素材ID
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-3">
+                                <input type="text" name="Ad[content_id]" class="form-control"
+                                       value="{$ad_row['content_id'] ?? ''}"/>
+                            </div>
+                        </div>
+
+                        <div id="outerDiv" class="{if empty($ad_row['type']) OR $ad_row['type']==1}hide{/if}">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">小程序appId
+                                    <span class="required"> * </span>
+                                </label>
+                                <div class="col-md-3">
+                                    <input type="text" name="Ad[app_id]" class="form-control"
+                                           value="{$ad_row['app_id'] ?? ''}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">打开页面路径
+                                </label>
+                                <div class="col-md-3">
+                                    <input placeholder="page/index/index" type="text" name="Ad[path]" class="form-control"
+                                           value="{$ad_row['path'] ?? ''}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">额外参数
+                                </label>
+                                <div class="col-md-3">
+                                    <textarea name="Ad[extra_data]" rows="5" class="form-control  margin-top-10" placeholder="输入格式：{name: 'test', type: 5}">{$ad_row['extra_data'] ?? ''}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <!--<div class="form-group">
+                            <label class="control-label col-md-3">链接
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-3">
+                                <input type="text" name="Ad[link]" class="form-control"
+                                       value="{$ad_row['link'] ?? ''}"/>
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label class="control-label col-md-3">选择位置
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-2">
@@ -25,7 +84,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label class="control-label col-md-3">名称
                                 <span class="required"> * </span>
@@ -33,16 +91,6 @@
                             <div class="col-md-3">
                                 <input type="text" name="Ad[title]" class="form-control"
                                        value="{$ad_row['title'] ?? ''}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3">链接
-                                <span class="required"> * </span>
-                            </label>
-                            <div class="col-md-3">
-                                <input type="text" name="Ad[link]" class="form-control"
-                                       value="{$ad_row['link'] ?? ''}"/>
                             </div>
                         </div>
 
