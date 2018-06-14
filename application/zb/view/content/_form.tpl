@@ -106,49 +106,76 @@
                             </label>
                             <div class="col-md-2">
                                 <select class="form-control" name="Content[page_type]" id="pageType">
-                                    <option value="0">--请选择类型--</option>
-                                    <option value="single" {if isset($content_row['page_type']) AND $content_row['page_type']=='single'}selected{/if}>单字段</option>
-                                    <option value="multi" {if isset($content_row['page_type']) AND $content_row['page_type']=='multi'}selected{/if}>多字段</option>
+                                    <option value="multi" {if isset($content_row['page_type']) AND $content_row['page_type']=='multi'}selected{/if}>多输入项</option>
+                                    <option value="single" {if isset($content_row['page_type']) AND $content_row['page_type']=='single'}selected{/if}>单输入项</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group {if isset($content_row['page_type']) AND $content_row['page_type']=='single'}hide{/if}" id="multiDiv">
-                            <label class="control-label col-md-3">输入页字段
-                                <span class="required"> * </span>
-                            </label>
-                            <div class="col-md-3">
-                                <div class="" id="list">
-                                    {if !empty($content_row['input_list'])}
-                                        {foreach $content_row['input_list'] as $k=>$v}
-                                            <span class="label label-success margin-right-10 removeOpt">{$v['text']}<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        <div id="multiDiv" class="{if isset($content_row['page_type']) AND $content_row['page_type']=='single'}hide{/if}">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">输入页字段
+                                    <span class="required"> * </span>
+                                </label>
+                                <div class="col-md-3">
+                                    <div class="" id="list">
+                                        {if !empty($content_row['input_list'])}
+                                            {foreach $content_row['input_list'] as $k=>$v}
+                                                <span class="label label-success margin-right-10 removeOpt">{$v['text']}<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             <input type="hidden" name="text[]" value="{$v['text']}" />
                                             <input type="hidden" name="optType[]" value="{$v['optType']}" />
                                             <input type="hidden" name="values[]" value="{php}echo implode(',', $v['values']);{/php}" /></span>
-                                        {/foreach}
-                                    {/if}
+                                            {/foreach}
+                                        {/if}
+                                    </div>
+                                    <input type="text" placeholder="输入项标题，如姓名" name="Add[text]" class="form-control margin-top-10" />
+                                    <select class="form-control margin-top-10 optType" name="Add[optType]">
+                                        <option value="0">--请选择输入类型--</option>
+                                        <option value="input">输入框</option>
+                                        <option value="radio">单选框</option>
+                                        <option value="select">下拉框</option>
+                                        <option value="file">上传图片</option>
+                                        <option value="date">日期</option>
+                                    </select>
+                                    <div class="optionsDiv hide">
+                                        <textarea name="Add[values]" rows="5" class="form-control  margin-top-10" placeholder="请输入各下拉选项"></textarea>
+                                        <div class="clearfix margin-top-10">
+                                            <span class="label label-success">提示!</span> 下拉选项之间以英文逗号隔开
+                                        </div>
+                                    </div>
+                                    <button class="btn margin-top-10" id="addOpt">添加</button>
                                 </div>
-                                <input type="text" placeholder="输入项标题，如姓名" name="Add[text]" class="form-control margin-top-10" />
-                                <select class="form-control margin-top-10 optType" name="Add[optType]">
-                                    <option value="0">--请选择输入类型--</option>
-                                    <option value="input">输入框</option>
-                                    <option value="radio">单选框</option>
-                                    <option value="select">下拉框</option>
-                                    <option value="file">上传图片</option>
-                                    <option value="date">日期</option>
-                                </select>
-                                <div class="optionsDiv hide">
-                                    <textarea name="Add[values]" rows="5" class="form-control  margin-top-10" placeholder="请输入各下拉选项"></textarea>
+                            </div>
+                            <div  class="form-group">
+                                <label class="control-label col-md-3">背景图
+                                    图片<span class="required"> * </span></label>
+                                <div class="col-md-9">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-preview thumbnail" data-trigger="fileinput"
+                                             style="width: 160px; height: 85px;">
+                                            {if isset($content_row['img_bg']) AND $content_row['img_bg']}
+                                                <img src="{$Think.config.img_host}/{$content_row['img_bg']}">
+                                            {/if}
+                                        </div>
+                                        <div>
+                                        <span class="btn red btn-outline btn-file">
+                                            <span class="fileinput-new"> 选择图片 </span>
+                                            <span class="fileinput-exists"> 重选图片 </span>
+                                            <input type="file" name="File[img_bg]"> </span>
+                                            <input type="hidden" name="File[img_bg]" value="">
+                                            </span>
+                                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> 删除 </a>
+                                        </div>
+                                    </div>
                                     <div class="clearfix margin-top-10">
-                                        <span class="label label-success">提示!</span> 下拉选项之间以英文逗号隔开
+                                        <span class="label label-success">警告!</span> 根据页面高度上传对应图片.图片预览仅仅支持 IE10+, FF3.6+, Safari6.0+, Chrome6.0+, Opera11.1+. 在较老的浏览器中只显示文件名.
                                     </div>
                                 </div>
-                                <button class="btn margin-top-10" id="addOpt">添加</button>
                             </div>
                         </div>
 
-                        <div class="form-group {if isset($content_row['page_type']) AND $content_row['page_type']=='multi'}hide{/if}" id="singleDiv">
-                            <label class="control-label col-md-3">示例图片
+                        <div class="form-group {if empty($content_row['page_type']) OR $content_row['page_type']=='multi'}hide{/if}" id="singleDiv">
+                            <label class="control-label col-md-3">封面图
                                 图片<span class="required"> * </span></label>
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">

@@ -93,6 +93,7 @@ class Content extends Controller
             $file = $attributes['File'];
             if ($file['img_icon']) $content['img_icon'] = UploadFile::common($file['img_icon'], 'zb_content', false);
             if ($file['img_example']) $content['img_example'] = UploadFile::common($file['img_example'], 'zb_content', false);
+            if ($file['img_bg']) $content['img_bg'] = UploadFile::common($file['img_bg'], 'zb_content', false);
 
             if(isset($attributes['text']) && !empty($attributes['text'])) {
                 $text = $attributes['text'];
@@ -137,6 +138,7 @@ class Content extends Controller
             $file = $attributes['File'];
             if ($file['img_icon']) $content['img_icon'] = UploadFile::common($file['img_icon'], 'zb_content', false);
             if ($file['img_example']) $content['img_example'] = UploadFile::common($file['img_example'], 'zb_content', false);
+            if ($file['img_bg']) $content['img_bg'] = UploadFile::common($file['img_bg'], 'zb_content', false);
 
             if(isset($attributes['text']) && !empty($attributes['text'])) {
                 $text = $attributes['text'];
