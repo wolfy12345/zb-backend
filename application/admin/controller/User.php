@@ -29,6 +29,10 @@ class User extends Controller
      */
     public function login(Request $req)
     {
+        if(!empty(Session::get("user_id"))) {
+            return redirect("/admin/index/index");
+        }
+
         $this->data['title'] = "index";
 
         $this->data['error'] = '';
