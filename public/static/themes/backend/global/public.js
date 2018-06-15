@@ -87,3 +87,55 @@ function dateTimePicker(obj)
         pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
     });
 }
+
+//全选全不选
+$("#checkall").click(function () {
+    if($(this).is(":checked")) {
+        $(".checkboxes").each(function (i, n) {
+            if(!$(n).is(":checked")) {
+                $(n).trigger("click")
+            }
+        })
+    } else {
+        $(".checkboxes").each(function (i, n) {
+            if($(n).is(":checked")) {
+                $(n).trigger("click")
+            }
+        })
+    }
+});
+//批量删除
+$("#deletes").on('click',function(){
+    var ids = [];
+    $(".checkboxes:checked").each(function(i, n) {
+        ids.push($(n).val());
+    })
+    if(ids == '') {
+        bootbox.alert("至少选择一个选项");
+        return false;
+    }
+    var obj = $(this);
+    bootbox.confirm("确定要删除吗，删除后可在回收站进行恢复操作", function(result) {
+        if (result == true) {
+            var data_href = obj.attr('data-href');
+            var csrf = $('.request-csrf').val();
+            App.blockUI({
+                target: '.page-container',
+                animate: true
+            });
+            bootbox.hideAll();
+            $.post(
+                data_href,
+                {id: ids.join(","), '_csrf': csrf},
+                function (res) {
+                    App.unblockUI('.page-container');
+                    if (res.code == 500) {
+                        bootbox.alert(res.msg);
+                    } else location.reload();
+                }, 'json'
+            );
+            // location.reload();
+            return false;
+        }
+    });
+});

@@ -119,15 +119,27 @@ class Ad extends Controller
      */
     public function delete(Request $req)
     {
-        $ad_id = $req->param('ad_id');
+        $ad_id = $req->param('id');
         if (!$ad_id) return json(['code' => 500, 'msg' => '没有获取请求的ID']);
-        $attributes['disabled'] = 'true';
-        $attributes['update_time'] = time();
-        $attributes['updater'] = Session::get("user_id");
 
         $zbAd = new ZbAd();
-        $submit = $zbAd->save($attributes, ['ad_id' => $ad_id]) ? 200 : 500;
-        if ($submit == 500) json(['code' => 500, 'msg' => '删除失败']);
+        if(strpos($ad_id, ",") !== false) {    //批量删除
+            $ad_id = explode(',', $ad_id);
+            $list = [];
+            foreach ($ad_id as $cid) {
+                $list[] = ['ad_id' => $cid, 'disabled' => 'true', 'update_time' => time(), 'updater' => Session::get("user_id")];
+            }
+            $zbAd->saveAll($list);
+            $submit = 200;
+        } else {
+            $attributes['disabled'] = 'true';
+            $attributes['update_time'] = time();
+            $attributes['updater'] = Session::get("user_id");
+
+            $submit = $zbAd->save($attributes, ['ad_id' => $ad_id]) ? 200 : 500;
+        }
+
+        if ($submit == 500) return json(['code' => 500, 'msg' => '删除失败']);
         return json(['code' => 200]);
     }
 }

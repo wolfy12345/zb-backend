@@ -45,6 +45,12 @@ class AppAdminAcl
                             'list_side'=>['index'],
                             'list_act'=>['index'=>'清空缓存']
                         ],
+                        'recycle'=>[
+                            'name'=>'回收站',
+                            'sidebar'=>true,
+                            'list_side'=>['index'],
+                            'list_act'=>['index'=>'回收站列表']
+                        ],
                     ]
                 ],
             ]

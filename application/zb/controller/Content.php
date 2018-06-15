@@ -173,20 +173,27 @@ class Content extends Controller
      */
     public function delete(Request $req)
     {
-        $content_id = $req->param('content_id');
+        $content_id = $req->param('id');
         if (!$content_id) return json(['code' => 500, 'msg' => '没有获取请求的ID']);
-        $attributes['disabled'] = 'true';
-        $attributes['update_time'] = time();
-        $attributes['updater'] = Session::get("user_id");
 
         $zbContent = new ZbContent();
-        $submit = $zbContent->save($attributes, ['content_id' => $content_id]) ? 200 : 500;
+        if(strpos($content_id, ",") !== false) {    //批量删除
+            $content_id = explode(',', $content_id);
+            $list = [];
+            foreach ($content_id as $cid) {
+                $list[] = ['content_id' => $cid, 'disabled' => 'true', 'update_time' => time(), 'updater' => Session::get("user_id")];
+            }
+            $zbContent->saveAll($list);
+            $submit = 200;
+        } else {
+            $attributes['disabled'] = 'true';
+            $attributes['update_time'] = time();
+            $attributes['updater'] = Session::get("user_id");
+
+            $submit = $zbContent->save($attributes, ['content_id' => $content_id]) ? 200 : 500;
+        }
+
         if ($submit == 500) return json(['code' => 500, 'msg' => '删除失败']);
         return json(['code' => 200]);
     }
-
-//    public function actionCache()
-//    {
-//        Yii::$app->cache->flush();
-//    }
 }

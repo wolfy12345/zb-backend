@@ -21,7 +21,9 @@
                         <div class="col-md-6">
                             <div class="btn-group">
                                 {php}echo AppAdminAcl::filterButton('zb/cat/create',
-                                    '<a href="/zb/cat/create" class="btn sbold green"> 添加<i class="fa fa-plus"></i></a>');{/php}
+                                    '<a href="/zb/cat/create" class="btn sbold green"> 添加<i class="fa fa-plus"></i></a>');{/php}&nbsp;
+                                {php}echo AppAdminAcl::filterButton('zb/cat/delete',
+                                    '<a id="deletes" data-href="/zb/cat/delete" type="button" class="btn btn-danger delete">批量删除</a>');{/php}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -33,7 +35,11 @@
                     <table id="table" class="table table-striped table-bordered table-hover table-checkable order-column">
                         <thead>
                             <tr>
-                                <th> 操作 </th>
+                                <th>
+                                    <label><input type="checkbox" id="checkall">全选</label>
+                                </th>
+                                <th width="15%"> 操作 </th>
+                                <th> ID </th>
                                 <th> 名称 </th>
                                 <th> 图片 </th>
                                 <th> 排序 </th>
@@ -44,10 +50,16 @@
                         {foreach $list as $v}
                             <tr class="odd gradeX">
                                 <td>
+                                    <input type="checkbox" value="{$v['cat_id']}" class="checkboxes">
+                                </td>
+                                <td>
                                     {php}echo AppAdminAcl::filterButton('zb/cat/update',
                                         '<a href="/zb/cat/update/cat_id/'.$v['cat_id'].'" type="button" class="btn btn-sm btn-info">编辑</a>');{/php}
                                     {php}echo AppAdminAcl::filterButton('zb/cat/delete',
-                                        '<a data-href="/zb/cat/delete/cat_id/'.$v['cat_id'].'" type="button" class="btn btn-sm btn-danger delete">删除</a>');{/php}
+                                        '<a data-href="/zb/cat/delete/id/'.$v['cat_id'].'" type="button" class="btn btn-sm btn-danger delete">删除</a>');{/php}
+                                </td>
+                                <td>
+                                    {$v['cat_id']}
                                 </td>
                                 <td>
                                     {$v['cat_name']}

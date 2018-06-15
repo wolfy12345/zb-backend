@@ -121,18 +121,34 @@ class Cat extends Controller
      */
     public function delete(Request $req)
     {
-        $cat_id = $req->param('cat_id');
+        $cat_id = $req->param('id');
         if (!$cat_id) return json(['code' => 500, 'msg' => '没有获取请求的ID']);
 
-        if (ZbContent::where('cat_id', $cat_id)->count())
-            return json(['code' => 500, 'msg' => '当然分类存在素材不可删除']);
-
-        $attributes['disabled'] = 'true';
-        $attributes['update_time'] = time();
-        $attributes['updater'] = Session::get("user_id");
-
         $zbCat = new ZbCat();
-        $submit = $zbCat->save($attributes, ['cat_id' => $cat_id]) ? 200 : 500;
+        if(strpos($cat_id, ",") !== false) {    //批量删除
+            $cat_id = explode(',', $cat_id);
+            $list = [];
+            foreach ($cat_id as $cid) {
+                if (ZbContent::where('cat_id', $cid)->count()) {
+                    return json(['code' => 500, 'msg' => 'ID为'.$cid.'的分类下存在素材不可删除']);
+                } else {
+                    $list[] = ['cat_id' => $cid, 'disabled' => 'true', 'update_time' => time(), 'updater' => Session::get("user_id")];
+                }
+            }
+            $zbCat->saveAll($list);
+            $submit = 200;
+        } else {
+            if (ZbContent::where('cat_id', $cat_id)->count()) {
+                return json(['code' => 500, 'msg' => '当前分类存在素材不可删除']);
+            }
+
+            $attributes['disabled'] = 'true';
+            $attributes['update_time'] = time();
+            $attributes['updater'] = Session::get("user_id");
+
+            $submit = $zbCat->save($attributes, ['cat_id' => $cat_id]) ? 200 : 500;
+        }
+
         if ($submit == 500) return json(['code' => 500, 'msg' => '删除失败']);
         return json(['code' => 200]);
     }
