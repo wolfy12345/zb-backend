@@ -53,6 +53,24 @@ class UploadFile
         }
     }
 
+
+    //自定义文件名上传图片
+    public static function custom($content, $subpath, $filename)
+    {
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $content, $result)) {
+//            $type = $result[2];
+//            $file_name = $filename . '.' . $type;
+            $savePath = App::getRootPath() . '/public/example/' . $subpath .'/';
+
+            if (!file_exists($savePath)) mkdir($savePath, 0777);
+            $targetFile = str_replace('//', '/', $savePath) . $filename;
+
+            if (!file_put_contents($targetFile, base64_decode(str_replace($result[1], '', $content), true))) return false;
+
+            return $savePath . '/' . $filename;
+        }
+    }
+
     /**
      * 文件上传
      *

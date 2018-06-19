@@ -40,7 +40,7 @@ function multiClose()
 //弹出高级筛选层 --end
 
 //删除提示
-$(table).on('click','.delete',function(){
+$("table, form").on('click','.delete',function(){
     var obj = $(this);
     bootbox.confirm("是否确定删除,注意：测试平台的删除将不改变数据！！！", function(result) {
         if (result == true) {

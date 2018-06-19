@@ -31,7 +31,7 @@ class AppAdminAcl
                             'name'=>'素材',
                             'sidebar'=>true,
                             'list_side'=>['index'],
-                            'list_act'=>['index'=>'素材列表','create'=>'素材创建','update'=>'素材编辑','cancel'=>'素材删除']
+                            'list_act'=>['index'=>'素材列表','create'=>'素材创建','update'=>'素材编辑','cancel'=>'素材删除', 'resultimg' => '上传结果图']
                         ],
                         'ad'=>[
                             'name'=>'广告',

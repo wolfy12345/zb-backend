@@ -39,13 +39,13 @@
                                 <th width="2%">
                                     <label><input type="checkbox" id="checkall">全选</label>
                                 </th>
-                                <th width="14%"> 操作 </th>
+                                <th width="24%"> 操作 </th>
                                 <th width="1%"> ID </th>
                                 <th width="7%"> 名称 </th>
                                 <th width="7%"> 分类 </th>
                                 <th width="7%"> 标题图片 </th>
                                 <th> 标题 </th>
-                                <th width="10%"> 短链接 </th>
+                                <!--<th width="10%"> 短链接 </th>-->
                                 <th width="5%"> 前台显示 </th>
                                 <th width="5%"> 参与数量 </th>
                                 <th width="5%"> 热门 </th>
@@ -64,6 +64,8 @@
                                         '<a href="/zb/content/update/content_id/'.$v['content_id'].'" type="button" class="btn btn-sm btn-info">编辑</a>');{/php}
                                     {php}echo AppAdminAcl::filterButton('zb/content/delete',
                                         '<a data-href="/zb/content/delete/id/'.$v['content_id'].'" type="button" class="btn btn-sm btn-danger delete">删除</a>');{/php}
+                                    {php}echo AppAdminAcl::filterButton('zb/content/resultimg',
+                                        '<a href="/zb/content/resultimg/content_id/'.$v['content_id'].'" type="button" class="btn btn-sm btn-info">上传结果图</a>');{/php}
                                 </td>
                                 <td>
                                     {$v['content_id']}
@@ -82,7 +84,7 @@
                                 <td>
                                     {$v['title']}
                                 </td>
-                                <td><a href="{$v['short_url']}" target="_blank"> {$v['short_url']}</a></td>
+                                <!--<td><a href="{$v['short_url']}" target="_blank"> {$v['short_url']}</a></td>-->
                                 <td>
                                     {$Think.config.bool_status[$v['show_status']]}
                                 </td>

@@ -15,6 +15,7 @@ use app\zb\components\Search;
 use app\zb\model\ZbCat;
 use app\zb\model\ZbContent;
 use think\Controller;
+use think\facade\Config;
 use think\Request;
 use think\facade\Session;
 
@@ -166,6 +167,59 @@ class Content extends Controller
         $this->data['cat_list'] = ZbCat::all(['disabled' => 'false']);
         $this->data['action'] = 'update/content_id/' . $content_id;
         return $this->fetch('update', $this->data);
+    }
+
+    public function resultimg(Request $req)
+    {
+        $this->data['title'] = '素材管理';
+        $this->data['breadcrumbs'] = [['label'=>'素材管理','url'=>'/zb/content/index'],['label'=>'上传结果图']];
+
+        $content_id = $req->param("content_id");
+        if ($req->post()) {
+            $attributes = $req->param();
+            $content = $attributes['Content'];
+            $file = $attributes['File'];
+
+            if ($file['img_result']) UploadFile::custom($file['img_result'], $content['name'], $content['filename']);
+            $this->redirect('resultimg', ['content_id' => $content_id, 'ref_sub' => 200]);
+        }
+
+        $content_row = ZbContent::get($content_id);
+        $name = $content_row['name'];
+        $dir = IA_ROOT."/example/" . $name ."/";
+        $fp = opendir($dir);
+        $imgs = [];
+        while(($filename = readdir($fp)) !== false) {
+            if(is_dir($filename))   continue;
+            $imgs[] = ['path' => Config::get("result_img_host") . $name . "/" . $filename, 'filename' => $filename];
+        }
+        $m = 0;
+        $new = [];
+        foreach($imgs as $k => $v) {
+            if($k % 4 == 0) {
+                $m++;
+            }
+            $new[$m][$k] = $v;
+        }
+
+        $this->data['name'] = $name;
+        $this->data['imgs'] = $new;
+        $this->data['action'] = 'resultimg/content_id/' . $content_id;
+        return $this->fetch('resultimg', $this->data);
+    }
+
+    public function deleteimg(Request $req)
+    {
+        $name = $req->param('name');
+        $filename = $req->param('filename');
+        if (!$name || !$filename) return json(['code' => 500, 'msg' => '无效请求']);
+
+        $file = IA_ROOT . '/example/' . $name . "/" . $filename;
+        if(file_exists($file)) {
+            unlink($file);
+        }
+
+        return json(['code' => 200]);
     }
 
     /**

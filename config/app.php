@@ -16,6 +16,7 @@
 return [
     'img_host' => 'http://admin.zb.com/uploads/',
     'user_img_host' => 'http://admin.zb.com/images/',
+    'result_img_host' => 'http://admin.zb.com/example/',
     'bool_status' => [0=>'否', 1=>'是'],
     
     // 应用名称
