@@ -57,10 +57,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">描述:<span class="required"> * </span>
+                            <label class="col-md-3 control-label">简介:<span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
                                 <textarea class="form-control" rows="3" name="Content[content]">{$content_row['content'] ?? '装B-'}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">内容描述:<span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <textarea class="form-control" rows="3" name="Content[content_desc]">{$content_row['content_desc'] ?? ''}</textarea>
                             </div>
                         </div>
 

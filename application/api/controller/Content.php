@@ -48,7 +48,7 @@ class Content extends Controller
         $img_url = Config::get("img_host");
 
         $zbContent = new ZbContent();
-        $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->where('disabled', 'false')->where('is_recommend', 1)->order('take_num ' . SORT_ASC)->limit(3)->select();
+        $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->where('disabled', 'false')->where('is_recommend', 1)->order('take_num ' . SORT_ASC)->limit(10)->select();
         $list->each(function ($item) use ($img_url) {
             $item->img_icon = $img_url . $item->img_icon;
         });
@@ -62,7 +62,7 @@ class Content extends Controller
         $contentId = $req->param("contentId", 0);
 
         $zbContent = new ZbContent();
-        $detail = $zbContent->field("content_id, title, name, img_icon, img_example, content, page_type, input_list, img_bg")->where('content_id', $contentId)->find();
+        $detail = $zbContent->field("content_id, title, name, img_icon, img_example, content, content_desc, page_type, input_list, img_bg")->where('content_id', $contentId)->find();
         $detail['img_icon'] = $img_url . $detail['img_icon'];
         $detail['img_example'] = !empty($detail['img_example']) ? $img_url . $detail['img_example'] : '';
         $detail['img_bg'] = !empty($detail['img_bg']) ? $img_url . $detail['img_bg'] : '';

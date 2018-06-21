@@ -30,9 +30,20 @@ class Index extends Controller
             $item->img_icon = $img_url . $item->img_icon;
         });
 
+        $popup = ['isPopup' => false, 'hotList' => []];
+        if(Config::get("index_popup")) {
+
+            $hotList = $zbContent->field("content_id, title, img_icon, content, page_type, take_num")->where('disabled', 'false')->where('is_hot', 1)->order('p_order ' . SORT_ASC)->limit(3)->select();
+            $hotList->each(function($item) use ($img_url) {
+                $item->img_icon = $img_url . $item->img_icon;
+            });
+            $popup['isPopup'] = true;
+            $popup['hotList'] = $hotList;
+        }
+
         $zbCat = new ZbCat();
         $catList = $zbCat->field("cat_id, cat_img, cat_name")->where('disabled', 'false')->order('p_order ' . SORT_ASC)->limit(8)->select();
 
-        return json(['data'=> ['adList' => $adList, 'catList' => $catList, 'contentList' => $contentList->getCollection(), 'page'=> $contentList->currentPage(), 'total' => $contentList->total()], 'code'=>200]);
+        return json(['data'=> ['popup' => $popup, 'adList' => $adList, 'catList' => $catList, 'contentList' => $contentList->getCollection(), 'page'=> $contentList->currentPage(), 'total' => $contentList->total()], 'code'=>200]);
     }
 }
