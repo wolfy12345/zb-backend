@@ -3,6 +3,7 @@ namespace app\api\controller;
 
 use app\api\model\ZbAd;
 use app\api\model\ZbContent;
+use app\zb\model\ZbTabbar;
 use think\Controller;
 use think\facade\Config;
 use think\Request;
@@ -26,5 +27,12 @@ class Ad extends Controller
         });
 
         return json(['data'=> ['list' => $adList], 'code'=>200]);
+    }
+
+    public function getTabbar() {
+        $zbTabbar = new ZbTabbar();
+        $tabInfo = $zbTabbar->find();
+
+        return json(['tabInfo' => $tabInfo, 'code' => 200]);
     }
 }

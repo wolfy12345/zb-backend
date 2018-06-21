@@ -14,6 +14,7 @@ use app\common\components\AppAdminAcl;
 use app\common\components\UploadFile;
 use app\zb\components\Search;
 use app\zb\model\ZbAd;
+use app\zb\model\ZbTabbar;
 use think\Controller;
 use think\Request;
 use think\facade\Session;
@@ -142,5 +143,37 @@ class Ad extends Controller
 
         if ($submit == 500) return json(['code' => 500, 'msg' => '删除失败']);
         return json(['code' => 200]);
+    }
+
+    //底部导航条
+    public function tabsetting(Request $req)
+    {
+        $this->data['title'] = '底部导航条管理';
+        $this->data['breadcrumbs'] = [['label'=>'底部导航条管理','url'=>'?r=zb/ad/index'],['label'=>'新增']];
+
+        if ($req->post()) {
+            $attributes = $req->param();
+            $content = $attributes['Ad'];
+            $content['create_time'] = time();
+            $content['creator'] = Session::get('user_id');
+
+            $file = $attributes['File'];
+            if ($file['iconPath']) $content['iconPath'] = UploadFile::common($file['iconPath'], 'tab_bar', false);
+            if ($file['selectedIconPath']) $content['selectedIconPath'] = UploadFile::common($file['selectedIconPath'], 'tab_bar', false);
+
+            $zbAd = new ZbTabbar();
+            if(empty($attributes['Ad']['id'])) {
+                $submit = $zbAd->save($content) ? 200 : 500;
+            } else {
+                $submit = $zbAd->save($content, ['id' => 1]) ? 200 : 500;
+            }
+
+            if ($submit == 200) $this->redirect('/zb/ad/index');
+            else $this->redirect('tabsetting', ['ref_sub' => $submit]);
+        }
+
+        $this->data['ad_row'] = ZbTabbar::get(1);
+        $this->data['action'] = 'tabsetting';
+        return $this->fetch('tabsetting', $this->data);
     }
 }

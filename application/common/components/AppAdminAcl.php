@@ -37,7 +37,7 @@ class AppAdminAcl
                             'name'=>'广告',
                             'sidebar'=>true,
                             'list_side'=>['index'],
-                            'list_act'=>['index'=>'广告列表','create'=>'广告创建','update'=>'广告编辑','cancel'=>'广告删除']
+                            'list_act'=>['index'=>'广告列表','create'=>'广告创建','update'=>'广告编辑','cancel'=>'广告删除','tabsetting' => '底部导航条']
                         ],
                         'cache'=>[
                             'name'=>'缓存',

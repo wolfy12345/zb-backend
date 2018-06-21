@@ -33,8 +33,9 @@
                         <div class="col-md-6">
                             <div class="btn-group">
                                 {php}echo AppAdminAcl::filterButton('zb/ad/create',
-                                    '<a href="/zb/ad/create" class="btn sbold green"> 添加<i class="fa fa-plus"></i></a>');{/php}
-                                &nbsp;
+                                    '<a href="/zb/ad/create" class="btn sbold green" style="margin-right: 3px;"> 添加<i class="fa fa-plus"></i></a>');{/php}
+                                {php}echo AppAdminAcl::filterButton('zb/ad/tabsetting',
+                                    '<a href="/zb/ad/tabsetting" class="btn sbold green" style="margin-right: 3px;"> 底部导航条</a>');{/php}
                                 {php}echo AppAdminAcl::filterButton('zb/ad/delete',
                                     '<a id="deletes" data-href="/zb/ad/delete" type="button" class="btn btn-danger delete">批量删除</a>');{/php}
                             </div>
