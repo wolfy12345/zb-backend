@@ -32,6 +32,7 @@ class Ad extends Controller
     public function getTabbar() {
         $zbTabbar = new ZbTabbar();
         $tabInfo = $zbTabbar->find();
+        $tabInfo['current'] = 0;
 
         return json(['tabInfo' => $tabInfo, 'code' => 200]);
     }
