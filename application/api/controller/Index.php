@@ -19,7 +19,7 @@ class Index extends Controller
         $zbAd = new ZbAd();
 //        $adList = $zbAd->field("logo, type, content_id, app_id, path, extra_data")->where('disabled', 'false')->order('p_order ' . SORT_ASC)->limit(3)->select();
 
-        $adList = $zbAd->alias('a')->field("logo, type, a.content_id, app_id, path, extra_data, c.page_type")->where('a.disabled', 'false')->where('a.status', '1')->leftJoin($zbContent->getTable() . " c", "a.content_id = c.content_id")->order('a.p_order ' . SORT_ASC)->limit(5)->select();
+        $adList = $zbAd->alias('a')->field("logo, type, a.content_id, app_id, path, extra_data, c.page_type")->where('a.disabled', 'false')->where('a.status', '1')->where('a.position_id', 2)->leftJoin($zbContent->getTable() . " c", "a.content_id = c.content_id")->order('a.p_order ' . SORT_ASC)->limit(5)->select();
         $adList->each(function($item) use ($img_url) {
             $item->logo = $img_url . $item->logo;
         });

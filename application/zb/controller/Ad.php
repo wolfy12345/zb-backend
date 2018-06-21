@@ -32,6 +32,7 @@ class Ad extends Controller
         $this->data['ad_type'] = [
             '1' => '所有页面',
             '2' => '首页-轮播',
+            '3' => '输入页-底部轮播'
         ];
     }
 
