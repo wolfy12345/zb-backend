@@ -30,9 +30,14 @@ class Ad extends Controller
     }
 
     public function getTabbar() {
+        $img_url = Config::get("img_host");
         $zbTabbar = new ZbTabbar();
         $tabInfo = $zbTabbar->find();
-        $tabInfo['current'] = 0;
+        if($tabInfo) {
+            $tabInfo['current'] = 0;
+            $tabInfo['iconPath'] = $img_url . $tabInfo['iconPath'];
+            $tabInfo['selectedIconPath'] = $img_url . $tabInfo['selectedIconPath'];
+        }
 
         return json(['tabInfo' => $tabInfo, 'code' => 200]);
     }

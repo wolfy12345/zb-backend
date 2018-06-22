@@ -112,7 +112,7 @@
                     </div>
                     <input type="hidden" name="_csrf" value="{$Request.token}" />
                     <input type="hidden" name="Ad[type]" value="outer" />
-                    <input type="hidden" name="Ad[id]" value="1" />
+                    <input type="hidden" name="Ad[id]" value="{$ad_row['id']}" />
                 </form>
             </div>
         </div>

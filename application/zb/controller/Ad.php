@@ -165,14 +165,13 @@ class Ad extends Controller
             if(empty($attributes['Ad']['id'])) {
                 $submit = $zbAd->save($content) ? 200 : 500;
             } else {
-                $submit = $zbAd->save($content, ['id' => 1]) ? 200 : 500;
+                $submit = $zbAd->save($content, ['id' => $attributes['Ad']['id']]) ? 200 : 500;
             }
 
-            if ($submit == 200) $this->redirect('/zb/ad/index');
-            else $this->redirect('tabsetting', ['ref_sub' => $submit]);
+            $this->redirect('tabsetting', ['ref_sub' => $submit]);
         }
 
-        $this->data['ad_row'] = ZbTabbar::get(1);
+        $this->data['ad_row'] = ZbTabbar::find();
         $this->data['action'] = 'tabsetting';
         return $this->fetch('tabsetting', $this->data);
     }
