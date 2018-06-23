@@ -9,14 +9,14 @@
 namespace app\api\controller;
 
 use think\facade\Config;
-use think\Request;
+use app\common\components\UploadQiniu;
 
 class Upload
 {
     /**
      * 基本上图片保存
      */
-    public function base(Request $req)
+    public function base()
     {
         $file = request()->file('file');
         if ($file) {
@@ -28,6 +28,9 @@ class Upload
 
                 $this->imageUpdatesize($dir . $file, 140, 140, 's_');
 
+                UploadQiniu::uploadToQiniu(IA_ROOT . "/images/" . $info->getFilename(), "images/" . $info->getFilename());
+                UploadQiniu::uploadToQiniu(IA_ROOT . "/images/s_" . $info->getFilename(), "images/s_" . $info->getFilename());
+
                 $res = ['errCode' => 0, 'errMsg' => 'success', 'fullPath' => Config::get('user_img_host') . $file, 'source' => 's_' . $info->getFilename()];
                 return json($res);
             }
@@ -35,45 +38,6 @@ class Upload
             $res = ['errCode' => 1, 'errMsg' => 'fail'];
             return json($res);
         }
-        exit;
-
-
-//        $base64_image_content = $req->file('base64img');
-//        $width = isset($_GET['w']) && $_GET['w'] ? $_GET['w'] : 120;
-//        $height = isset($_GET['h']) && $_GET['h'] ? $_GET['h'] : 120;
-//
-//        $output_directory = 'uploads/user';
-//
-//        /* 检查并创建图片存放目录 */
-//        if (!file_exists($output_directory)) {
-//            mkdir($output_directory, 0777);
-//        }
-//        $file_name = md5(date('Ymd') . substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8));
-//
-//        /* 根据base64编码获取图片类型 */
-//        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)) {
-//            $image_type = $result[2]; //data:image/jpeg;base64,
-//            $output_file = $output_directory . '/' . $file_name . '.' . $image_type;
-//        }
-//
-//        /* 将base64编码转换为图片编码写入文件 */
-//        $image_binary = base64_decode(str_replace($result[1], '', $base64_image_content));
-//        if (!file_put_contents($output_file, $image_binary)) {
-//
-//            echo json_encode(array(
-//                'code' => 400,
-//            ));
-//            die;
-//        }
-//
-//        $this->imageUpdatesize($output_file, $width, $height, 's_');
-//
-//        $filearray = [
-//            'code' => 200,
-//            'real_name' => Config::get("user_img_host") . '/user/' . $file_name . '.' . $image_type,
-//            'file_name' => 's_' . $file_name . '.' . $image_type,
-//        ];
-//        echo json_encode($filearray);
     }
 
     /**

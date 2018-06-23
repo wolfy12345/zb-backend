@@ -37,6 +37,7 @@ class UploadFile
             $targetFile = str_replace('//', '/', $path) . $file_name;
 
             if (!file_put_contents($targetFile, base64_decode(str_replace($result[1], '', $content), true))) return false;
+            UploadQiniu::uploadToQiniu($targetFile, "uploads/" . $save_model . "/" . $file_name);
 
             if ($thumb) {
                 foreach ($thumb as $v) {
