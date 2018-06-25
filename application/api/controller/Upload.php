@@ -31,7 +31,7 @@ class Upload
                 UploadQiniu::uploadToQiniu(IA_ROOT . "/images/" . $info->getFilename(), "images/" . $info->getFilename());
                 UploadQiniu::uploadToQiniu(IA_ROOT . "/images/s_" . $info->getFilename(), "images/s_" . $info->getFilename());
 
-                $res = ['errCode' => 0, 'errMsg' => 'success', 'fullPath' => Config::get('user_img_host') . $file, 'source' => 's_' . $info->getFilename()];
+                $res = ['errCode' => 0, 'errMsg' => 'success', 'fullPath' => Config::get('user_img_host') . 's_' . $file, 'source' => 's_' . $info->getFilename()];
                 return json($res);
             }
         } else {
