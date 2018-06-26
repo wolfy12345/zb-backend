@@ -57,7 +57,7 @@ class Wgmj
         }
       
         // #二维码
-         $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/tmp2.png'));
+         $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/qr140.png'));
          $white = imagecolorallocate($im1 , 174 , 55 , 77);
          imagecolortransparent($im1 , $white ) ;
          imagefill($im1 , 0, 0 , $white);

@@ -110,7 +110,7 @@ class Jzkys
              imagettftext($im, 12, 0, 228, 805, $black, $font, $select2);
         } 
         // #二维码
-         $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/tmp8.png'));
+         $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/qr135.png'));
          $white = imagecolorallocate($im1 , 211 , 210 , 208);
          imagecolortransparent($im1 , $white ) ;
          imagefill($im1 , 0, 0 , $white);

@@ -68,7 +68,7 @@ class Sydsh
         imagecopy($im, $img_l_t, 2, 210, 0, 0, 234, 234);
 
         #二维码
-        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT . '/static/qrcode/zbgs008_160_bai.png'));
+        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT . '/static/qrcode/qr160.png'));
         $white = imagecolorallocate($im1, 255, 255, 255);
         imagecolortransparent($im1, $white);
         imagefill($im1, 100, 320, $white);

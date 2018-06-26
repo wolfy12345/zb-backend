@@ -41,7 +41,7 @@ class Dididaihe
         imagettftext($im, 18, 3, 155, 530, $black, $font, $name1);
 
         #二维码
-        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/zhuangbjun_163.png'));
+        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/qr163.png'));
         $white = imagecolorallocate($im1 , 223 , 223 , 223);
         imagecolortransparent($im1 , $white ) ;
         imagefill($im1 , 100, 320 , $white);

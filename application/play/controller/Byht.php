@@ -46,7 +46,7 @@ class Byht
         imagettftext($im, 28, 0, 255, 480, $black, $font, $name1);
         imagettftext($im, 28, 0, 620, 885, $black, $font, $name3);
 
-          $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/tmp8.png'));
+          $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/qr135.png'));
          $white = imagecolorallocate($im1 ,197 , 200 , 209);
          imagecolortransparent($im1 , $white ) ;
          imagefill($im1 , 0, 0 , $white);

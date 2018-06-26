@@ -36,7 +36,7 @@ class Iphonex2
         $font = IA_ROOT.'/static/fonts/qmsx.ttf';
         imagettftext($im, 35, 125, 670, 410, $black, $font, $text);
       
-       $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/tmp8.png'));
+       $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/qr140.png'));
          $white = imagecolorallocate($im1 , 253 ,222 , 195);
          imagecolortransparent($im1 , $white ) ;
          imagefill($im1 , 0, 0 , $white);

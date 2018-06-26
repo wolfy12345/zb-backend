@@ -56,7 +56,7 @@ class Xrqs
         imagefill($qq , 100, 320 , $white);
         imagecopymerge($im, $qq, 380, 250, 0, 0, 130, 130, 100);
         #二维码
-        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/zbgs008_115.png'));
+        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/qr115.png'));
         $white = imagecolorallocate($im1 , 214 , 214 , 214);
         imagecolortransparent($im1 , $white ) ;
         imagefill($im1 , 100, 320 , $white);

@@ -38,7 +38,7 @@ class Rpjzd
         $font = IA_ROOT.'/static/fonts/msyh.ttf';
         imagettftext($im, 42, 0, 70, 190, $black, $font, $text);
         #二维码
-        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/zbgs008_115.png'));
+        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/qr115.png'));
         $white = imagecolorallocate($im1 , 223 , 223 , 223);
         imagecolortransparent($im1 , $white ) ;
         imagefill($im1 , 100, 320 , $white);

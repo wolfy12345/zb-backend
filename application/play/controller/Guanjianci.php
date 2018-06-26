@@ -64,7 +64,7 @@ class Guanjianci
         //姓名
         imagettftext($im, 50, 0, 250, 100, $black, $font, $name);
         #二维码
-        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/tmp4.png'));
+        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/qr160.png'));
         $white = imagecolorallocate($im1 , 255 , 255 , 255);
         imagecolortransparent($im1 , $white ) ;
         imagefill($im1 , 0, 0 , $white);

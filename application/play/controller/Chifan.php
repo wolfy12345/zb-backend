@@ -19,7 +19,8 @@ class Chifan
 //        $this->data['title'] = '2018靠什么吃饭';
 //        $this->data['num'] = rand(1,14);
 
-        return $this -> fetch('index');
+//        echo "<img src='http://admin.zb.com/play/chifan/image?name=111&' />";
+
     }
 
     /**
@@ -88,7 +89,7 @@ class Chifan
         }
 
         #二维码
-        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/tmp6.png'));
+        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT.'/static/qrcode/qr115.png'));
         $white = imagecolorallocate($im1 , 223 , 223 , 223);
         imagecolortransparent($im1 , $white ) ;
         imagefill($im1 , 100, 320 , $white);
