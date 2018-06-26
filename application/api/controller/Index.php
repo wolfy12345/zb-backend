@@ -11,6 +11,10 @@ use think\facade\Config;
 class Index extends Controller
 {
 
+    public function ifGetAvatar() {
+        return json(['open' => Config::get("get_avatar")]);
+    }
+
     public function getIndexInfo()
     {
         $img_url = Config::get("img_host");
