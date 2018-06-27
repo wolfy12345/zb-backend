@@ -152,7 +152,7 @@ class Xgbq
         imagettftext($im, 18, 0, 160, 645, $black, $font1, '长按识别二维码');
         imagettftext($im, 18, 0, 160, 675, $black, $font1, '生成你的性格标签');
         #二维码
-        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT . '/static/qrcode/qr100.jpg'));
+        $im1 = imagecreatefromstring(file_get_contents(IA_ROOT . '/static/qrcode/qr100.png'));
         $white = imagecolorallocate($im1, 223, 223, 223);
         imagecolortransparent($im1, $white);
         imagefill($im1, 100, 320, $white);
