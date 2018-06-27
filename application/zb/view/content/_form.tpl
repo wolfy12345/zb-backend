@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix margin-top-10">
-                                    <span class="label label-success">警告!</span> 上传图片宽*高(108*108).图片预览仅仅支持 IE10+, FF3.6+, Safari6.0+, Chrome6.0+, Opera11.1+. 在较老的浏览器中只显示文件名.
+                                    <span class="label label-success">警告!</span> 上传图片宽*高(51*51).
                                 </div>
                             </div>
                         </div>
@@ -176,14 +176,14 @@
                                         </div>
                                     </div>
                                     <div class="clearfix margin-top-10">
-                                        <span class="label label-success">警告!</span> 根据页面高度上传对应图片.图片预览仅仅支持 IE10+, FF3.6+, Safari6.0+, Chrome6.0+, Opera11.1+. 在较老的浏览器中只显示文件名.
+                                        <span class="label label-success">警告!</span> 根据页面高度上传对应图片.页面高度受页面中输入项个数的影响
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group {if empty($content_row['page_type']) OR $content_row['page_type']=='multi'}hide{/if}" id="singleDiv">
-                            <label class="control-label col-md-3">封面图
+                            <label class="control-label col-md-3">示例图
                                 图片<span class="required"> * </span></label>
                             <div class="col-md-9">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -204,7 +204,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix margin-top-10">
-                                    <span class="label label-success">警告!</span> 上传图片宽*高(320*170).图片预览仅仅支持 IE10+, FF3.6+, Safari6.0+, Chrome6.0+, Opera11.1+. 在较老的浏览器中只显示文件名.
+                                    <span class="label label-success">警告!</span> 上传图片宽*高(280*264).
                                 </div>
                             </div>
                         </div>

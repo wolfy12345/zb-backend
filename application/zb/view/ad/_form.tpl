@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix margin-top-10">
-                                    <span class="label label-success">警告!</span> 上传图片宽*高(640*158).图片预览仅仅支持 IE10+, FF3.6+, Safari6.0+, Chrome6.0+, Opera11.1+. 在较老的浏览器中只显示文件名.
+                                    <span class="label label-success">警告!</span> 首页轮播传图片宽*高(320*150). 输入页底部轮播传图片宽*高(320*75).
                                 </div>
                             </div>
                         </div>
