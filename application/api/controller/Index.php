@@ -47,7 +47,7 @@ class Index extends Controller
             }
 
             $zbCat = new ZbCat();
-            $catList = $zbCat->field("cat_id, cat_img, cat_name")->where('disabled', 'false')->order('p_order ' . SORT_ASC)->limit(8)->select();
+            $catList = $zbCat->field("cat_id, cat_img, cat_name")->where('disabled', 'false')->where('show_status', 1)->order('p_order ' . SORT_ASC)->limit(8)->select();
 
             $result = ['popup' => $popup, 'adList' => $adList, 'catList' => $catList, 'contentList' => $contentList->getCollection(), 'page' => $contentList->currentPage(), 'total' => $contentList->total()];
             Cache::set("index_result", $result);

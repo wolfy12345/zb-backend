@@ -14,8 +14,9 @@ class Content extends Controller
     public function getContentList(Request $req)
     {
         $catId = $req->param("catId", 0);
+        $page = $req->param('page', 1);
 
-        $contentList = Cache::get("contentList_" . $catId);
+        $contentList = Cache::get("contentList_" . $catId . "_" . $page);
         if (empty($contentList)) {
             $img_url = Config::get("img_host");
             $zbContent = new ZbContent();
@@ -28,7 +29,7 @@ class Content extends Controller
                 $item->img_icon = $img_url . $item->img_icon;
             });
             $contentList = ['list' => $list->getCollection(), 'page' => $list->currentPage(), 'total' => $list->total()];
-            Cache::set("contentList_" . $catId, $contentList);
+            Cache::set("contentList_" . $catId . "_" . $page, $contentList);
         }
 
         return json(['data' => $contentList, 'code' => 200]);
