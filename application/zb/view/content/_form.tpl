@@ -63,12 +63,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-3">参与数量(万)
+                            <label class="control-label col-md-3">参与数量
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-3">
                                 <input type="text" name="Content[take_num]" class="form-control"
-                                       value="{php}echo isset($content_row['take_num'])?$content_row['take_num']:sprintf("%.2f",1 + mt_rand() / mt_getrandmax() * (100 - 1));{/php}"/>
+                                       value="{php}echo isset($content_row['take_num'])?$content_row['take_num']:sprintf("%.2f",1 + mt_rand() / mt_getrandmax() * (100 - 1)) * 10000;{/php}"/>
                             </div>
                         </div>
 

@@ -34,6 +34,7 @@ class Index extends Controller
             $contentList = $zbContent->field("content_id, title, img_icon, content, page_type, take_num")->where('disabled', 'false')->where('show_status', 1)->order('p_order ' . SORT_ASC)->paginate(10);
             $contentList->each(function ($item) use ($img_url) {
                 $item->img_icon = $img_url . $item->img_icon;
+                $item->take_num = number_format($item->take_num / 10000, 2);
             });
 
             $zbSystem = new ZbSystem();

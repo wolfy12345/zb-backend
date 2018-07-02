@@ -27,6 +27,7 @@ class Content extends Controller
             }
             $list->each(function ($item) use ($img_url) {
                 $item->img_icon = $img_url . $item->img_icon;
+                $item->take_num = number_format($item->take_num / 10000, 2);
             });
             $contentList = ['list' => $list->getCollection(), 'page' => $list->currentPage(), 'total' => $list->total()];
             Cache::set("contentList_" . $catId . "_" . $page, $contentList);
@@ -45,6 +46,7 @@ class Content extends Controller
         $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->whereIn('content_id', $testedListArr)->order('take_num ' . SORT_ASC)->select();
         $list->each(function ($item) use ($img_url) {
             $item->img_icon = $img_url . $item->img_icon;
+            $item->take_num = number_format($item->take_num / 10000, 2);
         });
 
         return json(['data' => ['list' => $list], 'code' => 200]);
@@ -60,6 +62,7 @@ class Content extends Controller
             $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->where('disabled', 'false')->where('show_status', 1)->where('is_recommend', 1)->order('take_num ' . SORT_ASC)->limit(10)->select();
             $list->each(function ($item) use ($img_url) {
                 $item->img_icon = $img_url . $item->img_icon;
+                $item->take_num = number_format($item->take_num / 10000, 2);
             });
             Cache::set("recList", $list);
         }
@@ -87,5 +90,18 @@ class Content extends Controller
         }
 
         return json(['data' => ['detail' => $detail], 'code' => 200]);
+    }
+
+    public function addTakeNum(Request $req) {
+        $contentId = $req->param('contentId', 0);
+        if(empty($contentId)) {
+            return json(['code' => 500]);
+        }
+
+        $content = ZbContent::get($contentId);
+        $content->take_num = $content->take_num + 1;
+        $content->save();
+
+        return json(['code' => 200]);
     }
 }
