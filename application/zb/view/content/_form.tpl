@@ -47,16 +47,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-3">短链接
-                                <span class="required"> * </span>
-                            </label>
-                            <div class="col-md-3">
-                                <input type="text" name="Content[short_url]" class="form-control"
-                                       value="{$content_row['short_url'] ?? ''}"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label class="col-md-3 control-label">简介:<span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
@@ -253,7 +243,7 @@
                         <div class="row">
                             <div class="col-md-offset-3 col-md-9">
                                 <button type="submit" class="btn green">提交</button>
-                                <button type="reset" class="btn default">取消</button>
+                                <a href="/zb/content/index" type="reset" class="btn default">取消</a>
                             </div>
                         </div>
                     </div>

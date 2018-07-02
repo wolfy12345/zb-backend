@@ -144,7 +144,7 @@
                         <div class="row">
                             <div class="col-md-offset-3 col-md-9">
                                 <button type="submit" class="btn green">提交</button>
-                                <button type="reset" class="btn default">取消</button>
+                                <a href="/zb/ad/index" type="reset" class="btn default">取消</a>
                             </div>
                         </div>
                     </div>

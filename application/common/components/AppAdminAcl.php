@@ -51,6 +51,12 @@ class AppAdminAcl
                             'list_side'=>['index'],
                             'list_act'=>['index'=>'回收站列表']
                         ],
+                        'system'=>[
+                            'name'=>'系统设置',
+                            'sidebar'=>true,
+                            'list_side'=>['index'],
+                            'list_act'=>['index'=>'系统设置']
+                        ],
                     ]
                 ],
             ]

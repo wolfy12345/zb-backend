@@ -4,6 +4,7 @@ namespace app\api\controller;
 use app\api\model\ZbAd;
 use app\api\model\ZbCat;
 use app\api\model\ZbContent;
+use app\zb\model\ZbSystem;
 use think\Controller;
 use think\facade\Cache;
 use think\facade\Config;
@@ -30,14 +31,15 @@ class Index extends Controller
             });
 
             $zbContent = new ZbContent();
-            $contentList = $zbContent->field("content_id, title, img_icon, content, page_type, take_num")->where('disabled', 'false')->order('p_order ' . SORT_ASC)->paginate(10);
+            $contentList = $zbContent->field("content_id, title, img_icon, content, page_type, take_num")->where('disabled', 'false')->where('show_status', 1)->order('p_order ' . SORT_ASC)->paginate(10);
             $contentList->each(function ($item) use ($img_url) {
                 $item->img_icon = $img_url . $item->img_icon;
             });
 
+            $zbSystem = new ZbSystem();
+            $row = $zbSystem->get(['id' => 1]);
             $popup = ['isPopup' => false, 'hotList' => []];
-            if (Config::get("index_popup")) {
-
+            if ($row["value"]) {
                 $hotList = $zbContent->field("content_id, title, img_icon, content, page_type, take_num")->where('disabled', 'false')->where('is_hot', 1)->order('p_order ' . SORT_ASC)->limit(3)->select();
                 $hotList->each(function ($item) use ($img_url) {
                     $item->img_icon = $img_url . $item->img_icon;

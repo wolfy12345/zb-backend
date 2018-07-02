@@ -53,10 +53,8 @@
                                     <label><input type="checkbox" id="checkall">全选</label>
                                 </th>
                                 <th width="15%"> 操作
-                                <th> ID </th>
                                 <th> 名称 </th>
                                 <th> 类型 </th>
-                                <th> 链接 </th>
                                 <th> 图片 </th>
                                 <th> 显示 </th>
                                 <th> 排序 </th>
@@ -75,16 +73,10 @@
                                         '<a data-href="/zb/ad/delete/id/'.$v['ad_id'].'" type="button" class="btn btn-sm btn-danger delete">删除</a>');{/php}
                                 </td>
                                 <td>
-                                    {$v['ad_id']}
-                                </td>
-                                <td>
                                     {$v['title']}
                                 </td>
                                 <td>
                                     {$ad_type[$v['position_id']]}
-                                </td>
-                                <td>
-                                    {$v['link']}
                                 </td>
                                 <td>
                                     {if $v['logo']}

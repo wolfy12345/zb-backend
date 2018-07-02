@@ -21,9 +21,9 @@ class Content extends Controller
             $img_url = Config::get("img_host");
             $zbContent = new ZbContent();
             if ($catId == 0) {
-                $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->where('disabled', 'false')->order('p_order ' . SORT_ASC)->paginate($this->pageSize);
+                $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->where('disabled', 'false')->where('show_status', 1)->order('p_order ' . SORT_ASC)->paginate($this->pageSize);
             } else {
-                $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->where('disabled', 'false')->where('cat_id', $catId)->order('p_order ' . SORT_ASC)->paginate($this->pageSize);
+                $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->where('disabled', 'false')->where('show_status', 1)->where('cat_id', $catId)->order('p_order ' . SORT_ASC)->paginate($this->pageSize);
             }
             $list->each(function ($item) use ($img_url) {
                 $item->img_icon = $img_url . $item->img_icon;
@@ -57,7 +57,7 @@ class Content extends Controller
         $list = Cache::get("recList");
         if(empty($list)) {
             $zbContent = new ZbContent();
-            $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->where('disabled', 'false')->where('is_recommend', 1)->order('take_num ' . SORT_ASC)->limit(10)->select();
+            $list = $zbContent->field("content_id, title, img_icon, content, name, page_type, take_num")->where('disabled', 'false')->where('show_status', 1)->where('is_recommend', 1)->order('take_num ' . SORT_ASC)->limit(10)->select();
             $list->each(function ($item) use ($img_url) {
                 $item->img_icon = $img_url . $item->img_icon;
             });
